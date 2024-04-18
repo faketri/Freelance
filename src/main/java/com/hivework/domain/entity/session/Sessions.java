@@ -13,6 +13,7 @@ public class Sessions {
     private Long id;
     private String sessionId;
     private String username;
+    private LocalDateTime lastAccessTime;
     private LocalDateTime dateOfCreate;
 
     public Sessions() {
@@ -23,6 +24,17 @@ public class Sessions {
         this.sessionId = sessionId;
         this.username = username;
         this.dateOfCreate = dateOfCreate;
+    }
+
+    @PrePersist
+    public void onCreate(){
+        this.dateOfCreate = LocalDateTime.now();
+        this.lastAccessTime = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.lastAccessTime = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -55,5 +67,13 @@ public class Sessions {
 
     public void setDateOfCreate(LocalDateTime dateOfCreate) {
         this.dateOfCreate = dateOfCreate;
+    }
+
+    public LocalDateTime getLastAccessTime() {
+        return lastAccessTime;
+    }
+
+    public void setLastAccessTime(LocalDateTime lastAccessTime) {
+        this.lastAccessTime = lastAccessTime;
     }
 }
