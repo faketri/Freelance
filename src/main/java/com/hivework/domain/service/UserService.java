@@ -2,6 +2,7 @@ package com.hivework.domain.service;
 
 import com.hivework.domain.entity.user.Users;
 import com.hivework.domain.repository.UsersRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,14 @@ public class UserService {
 
     public Users findByLogin(String login) {
         return usersRepository.findByLogin(login).orElse(null);
+    }
+
+    public Users getCurrentUser() {
+        // Получение имени пользователя из контекста Spring Security
+        var username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        return findByLogin(username);
     }
 
     public Users save(Users users){

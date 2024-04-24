@@ -6,6 +6,7 @@ import com.hivework.domain.dto.response.UserResponse;
 import com.hivework.domain.entity.session.Sessions;
 import com.hivework.domain.entity.user.ERole;
 import com.hivework.domain.entity.user.Users;
+import com.hivework.domain.mapper.UsersMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,10 +52,7 @@ public class AuthService {
 
         sessionService.save(sessions);
 
-        return new UserResponse(users.getId(), users.getLogin(), users.getEmail(),
-                                users.getFirstName(), users.getLastName(),users.getProfileImage(),
-                                users.getSkills(), users.getBalance(), users.getDateOfCreate()
-        );
+        return UsersMapper.toResponse(users);
     }
 
     public UserResponse singIn(SingInRequest singInRequest, HttpSession session){
@@ -79,9 +77,6 @@ public class AuthService {
 
         sessionService.save(sessions);
 
-        return new UserResponse(users.getId(), users.getLogin(), users.getEmail(),
-                users.getFirstName(), users.getLastName(),users.getProfileImage(),
-                users.getSkills(), users.getBalance(), users.getDateOfCreate()
-        );
+        return UsersMapper.toResponse(users);
     }
 }

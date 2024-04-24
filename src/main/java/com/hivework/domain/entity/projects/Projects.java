@@ -18,24 +18,19 @@ public class Projects {
     private String description;
     @ManyToOne
     private Users usersCreator;
-    @ManyToOne
-    private Users usersDeveloper;
     private Long price;
     private LocalDateTime dateOfCreate;
     private LocalDateTime dateOfCompletion;
-    @Column(nullable = false)
-    private Boolean isService;
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
 
     public Projects() {
     }
 
-    public Projects(Long id, String description, Users usersCreator, Users usersDeveloper, LocalDateTime dateOfCreate, LocalDateTime dateOfCompletion, Set<Skills> skills) {
+    public Projects(Long id, String description, Users usersCreator, LocalDateTime dateOfCreate, LocalDateTime dateOfCompletion, Set<Skills> skills) {
         this.id = id;
         this.description = description;
         this.usersCreator = usersCreator;
-        this.usersDeveloper = usersDeveloper;
         this.dateOfCreate = dateOfCreate;
         this.dateOfCompletion = dateOfCompletion;
         this.skills = skills;
@@ -70,14 +65,6 @@ public class Projects {
         this.usersCreator = usersCreator;
     }
 
-    public Users getUsersDeveloper() {
-        return usersDeveloper;
-    }
-
-    public void setUsersDeveloper(Users usersDeveloper) {
-        this.usersDeveloper = usersDeveloper;
-    }
-
     public LocalDateTime getDateOfCreate() {
         return dateOfCreate;
     }
@@ -100,6 +87,14 @@ public class Projects {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     @Override

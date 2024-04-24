@@ -1,0 +1,8 @@
+package com.hivework.domain.repository;
+
+import com.hivework.domain.entity.services.Services;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+public interface ServicesRepository extends JpaRepository<Services, Long> {
+}

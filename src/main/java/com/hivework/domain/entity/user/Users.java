@@ -45,13 +45,15 @@ public class Users {
     public Users() {
     }
 
-    public Users(Long id, String login, String email, String firstName, String lastName, String password, Set<Skills> skills, Long balance, LocalDateTime dateOfCreate) {
+    public Users(Long id, String login, String email, String firstName, String lastName, String password,
+                 Image profileImage, Set<Skills> skills, Long balance, LocalDateTime dateOfCreate) {
         this.id = id;
         this.login = login;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.profileImage = profileImage;
         this.skills = skills;
         this.balance = balance;
         this.dateOfCreate = dateOfCreate;
