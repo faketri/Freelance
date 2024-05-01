@@ -40,7 +40,7 @@ public class DomainApplication {
 		SpringApplication.run(DomainApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner cmd(AuthService authService,
 								 ProjectsService projectsService,
 								 ServicesService servicesService,

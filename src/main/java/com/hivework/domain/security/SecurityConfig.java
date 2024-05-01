@@ -36,7 +36,8 @@ public class SecurityConfig {
                         requests
                                 .requestMatchers("/api/v1/auth/sing-in").permitAll()
                                 .requestMatchers("/api/v1/auth/sing-up").permitAll()
-                                .requestMatchers("/admin").authenticated())
+                                .requestMatchers("/admin").authenticated()
+                                .anyRequest().permitAll())
                 .sessionManagement(manager -> {
                     manager.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)//
