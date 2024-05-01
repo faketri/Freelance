@@ -1,7 +1,6 @@
 package com.hivework.domain.security;
 
-import com.hivework.domain.service.UserDetailsServiceIml;
-import com.hivework.domain.service.UserService;
+import com.hivework.domain.service.user.UserDetailsServiceIml;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

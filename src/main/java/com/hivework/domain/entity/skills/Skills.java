@@ -11,6 +11,14 @@ public class Skills {
     @Column(nullable = false)
     private String name;
 
+    public Skills() {
+    }
+
+    public Skills(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -27,23 +35,6 @@ public class Skills {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Skills skills = (Skills) o;
-
-        if (!id.equals(skills.id)) return false;
-        return name.equals(skills.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
-    }
 
     @Override
     public String toString() {

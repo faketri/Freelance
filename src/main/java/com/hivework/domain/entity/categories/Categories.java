@@ -13,7 +13,7 @@ public class Categories {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<SubCategories> subCategories = new HashSet<>();
 
     public Categories() {
@@ -47,24 +47,6 @@ public class Categories {
 
     public void setSubCategories(Set<SubCategories> subCategories) {
         this.subCategories = subCategories;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Categories that = (Categories) o;
-
-        if (!id.equals(that.id)) return false;
-        return name.equals(that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
     }
 
     @Override

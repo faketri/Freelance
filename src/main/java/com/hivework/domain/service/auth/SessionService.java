@@ -1,4 +1,4 @@
-package com.hivework.domain.service;
+package com.hivework.domain.service.auth;
 
 import com.hivework.domain.entity.session.Sessions;
 import com.hivework.domain.repository.SessionsRepository;

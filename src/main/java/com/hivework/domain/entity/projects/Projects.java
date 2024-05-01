@@ -1,5 +1,6 @@
 package com.hivework.domain.entity.projects;
 
+import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
 import jakarta.persistence.*;
@@ -15,9 +16,13 @@ public class Projects {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(nullable = false)
+    private String title;
+    @Column(nullable = false)
     private String description;
     @ManyToOne
     private Users usersCreator;
+    @ManyToOne
+    private SubCategories subCategories;
     private Long price;
     private LocalDateTime dateOfCreate;
     private LocalDateTime dateOfCompletion;
@@ -27,12 +32,13 @@ public class Projects {
     public Projects() {
     }
 
-    public Projects(Long id, String description, Users usersCreator, LocalDateTime dateOfCreate, LocalDateTime dateOfCompletion, Set<Skills> skills) {
+    public Projects(Long id, String title, String description, Users usersCreator, SubCategories subCategories, Long price, Set<Skills> skills) {
         this.id = id;
+        this.title = title;
         this.description = description;
         this.usersCreator = usersCreator;
-        this.dateOfCreate = dateOfCreate;
-        this.dateOfCompletion = dateOfCompletion;
+        this.subCategories = subCategories;
+        this.price = price;
         this.skills = skills;
     }
 
@@ -49,6 +55,14 @@ public class Projects {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -63,6 +77,14 @@ public class Projects {
 
     public void setUsersCreator(Users usersCreator) {
         this.usersCreator = usersCreator;
+    }
+
+    public SubCategories getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(SubCategories subCategories) {
+        this.subCategories = subCategories;
     }
 
     public LocalDateTime getDateOfCreate() {
@@ -95,28 +117,6 @@ public class Projects {
 
     public void setPrice(Long price) {
         this.price = price;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Projects projects = (Projects) o;
-
-        if (!id.equals(projects.id)) return false;
-        if (!description.equals(projects.description)) return false;
-        if (!usersCreator.equals(projects.usersCreator)) return false;
-        return dateOfCreate.equals(projects.dateOfCreate);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + usersCreator.hashCode();
-        result = 31 * result + dateOfCreate.hashCode();
-        return result;
     }
 
     @Override

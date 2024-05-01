@@ -3,7 +3,7 @@ package com.hivework.domain.controller;
 import com.hivework.domain.dto.request.SingInRequest;
 import com.hivework.domain.dto.request.SingUpRequest;
 import com.hivework.domain.dto.response.UserResponse;
-import com.hivework.domain.service.AuthService;
+import com.hivework.domain.service.auth.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;

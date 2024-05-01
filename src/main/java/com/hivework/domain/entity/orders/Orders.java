@@ -77,28 +77,4 @@ public class Orders {
     public void setDateOfCreate(LocalDateTime dateOfCreate) {
         this.dateOfCreate = dateOfCreate;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Orders orders = (Orders) o;
-
-        if (!id.equals(orders.id)) return false;
-        if (!projects.equals(orders.projects)) return false;
-        if (!developer.equals(orders.developer)) return false;
-        if (!payments.equals(orders.payments)) return false;
-        return dateOfCreate.equals(orders.dateOfCreate);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + projects.hashCode();
-        result = 31 * result + developer.hashCode();
-        result = 31 * result + payments.hashCode();
-        result = 31 * result + dateOfCreate.hashCode();
-        return result;
-    }
 }

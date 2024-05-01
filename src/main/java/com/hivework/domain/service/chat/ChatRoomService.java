@@ -1,4 +1,4 @@
-package com.hivework.domain.service;
+package com.hivework.domain.service.chat;
 
 import com.hivework.domain.entity.messager.ChatRoom;
 import com.hivework.domain.repository.ChatRoomRepository;

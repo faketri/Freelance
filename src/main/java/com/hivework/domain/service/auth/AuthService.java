@@ -1,4 +1,4 @@
-package com.hivework.domain.service;
+package com.hivework.domain.service.auth;
 
 import com.hivework.domain.dto.request.SingInRequest;
 import com.hivework.domain.dto.request.SingUpRequest;
@@ -7,6 +7,7 @@ import com.hivework.domain.entity.session.Sessions;
 import com.hivework.domain.entity.user.ERole;
 import com.hivework.domain.entity.user.Users;
 import com.hivework.domain.mapper.UsersMapper;
+import com.hivework.domain.service.user.UserDetailsServiceIml;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

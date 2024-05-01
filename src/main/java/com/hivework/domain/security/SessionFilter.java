@@ -1,15 +1,14 @@
 package com.hivework.domain.security;
 
 import com.hivework.domain.entity.session.Sessions;
-import com.hivework.domain.service.SessionService;
-import com.hivework.domain.service.UserDetailsServiceIml;
+import com.hivework.domain.service.auth.SessionService;
+import com.hivework.domain.service.user.UserDetailsServiceIml;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

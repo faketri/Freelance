@@ -1,5 +1,6 @@
 package com.hivework.domain.entity.services;
 
+import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.user.Users;
 import jakarta.persistence.*;
@@ -13,18 +14,31 @@ public class Services {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String title;
     @ManyToOne
     @JoinColumn(name = "developer_id")
     private Users developer;
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "sub_categories_id")
+    private SubCategories subCategories;
     @OneToMany()
     private Set<Image> images = new HashSet<>();
+
+    public SubCategories getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(SubCategories subCategories) {
+        this.subCategories = subCategories;
+    }
 
     public Services() {
     }
 
-    public Services(Long id, Users developer, String description, Set<Image> images) {
+    public Services(Long id, String title, Users developer, String description, Set<Image> images) {
         this.id = id;
+        this.title = title;
         this.developer = developer;
         this.description = description;
         this.images = images;
@@ -44,6 +58,14 @@ public class Services {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

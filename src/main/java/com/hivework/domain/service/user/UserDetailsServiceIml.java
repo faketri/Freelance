@@ -1,4 +1,4 @@
-package com.hivework.domain.service;
+package com.hivework.domain.service.user;
 
 import com.hivework.domain.entity.user.Users;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

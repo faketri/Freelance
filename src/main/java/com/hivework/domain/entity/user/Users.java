@@ -139,30 +139,4 @@ public class Users {
     public void setDateOfCreate(LocalDateTime dateOfCreate) {
         this.dateOfCreate = dateOfCreate;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Users users = (Users) o;
-
-        if (!id.equals(users.id)) return false;
-        if (!login.equals(users.login)) return false;
-        if (!email.equals(users.email)) return false;
-        if (!password.equals(users.password)) return false;
-        if (!balance.equals(users.balance)) return false;
-        return dateOfCreate.equals(users.dateOfCreate);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + login.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + balance.hashCode();
-        result = 31 * result + dateOfCreate.hashCode();
-        return result;
-    }
 }
