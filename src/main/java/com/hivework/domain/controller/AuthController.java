@@ -6,12 +6,10 @@ import com.hivework.domain.dto.response.UserResponse;
 import com.hivework.domain.service.auth.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 

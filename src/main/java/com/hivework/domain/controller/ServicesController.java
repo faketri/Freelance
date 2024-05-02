@@ -3,14 +3,13 @@ package com.hivework.domain.controller;
 import com.hivework.domain.entity.services.Services;
 import com.hivework.domain.service.services.ServicesService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
+@RequestMapping("/api/v1/services")
 public class ServicesController {
 
     private final ServicesService servicesService;
