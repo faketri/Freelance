@@ -31,7 +31,7 @@ services:
       - postgres_freelance
     restart: unless-stopped
 
-  spring_freelance:
+  freelance_back:
     container_name: freelance_back
     environment:
       DB_CONNECT: ${DB_CONNECT:-jdbc:postgresql://postgres_freelance/postgres}
@@ -50,7 +50,7 @@ services:
 
 
 networks:
-  spring_freelance:
+  freelance_back:
     driver: bridge
   postgres_freelance:
     driver: bridge
@@ -58,4 +58,4 @@ networks:
 volumes:
   postgres_freelance:
   pgadmin_freelance:
-  spring_freelance:
+  freelance_back:
