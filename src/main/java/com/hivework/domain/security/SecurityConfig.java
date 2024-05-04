@@ -46,6 +46,10 @@ public class SecurityConfig {
                         .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)//
                         .maximumSessions(1);
                 })
+                .logout((logout) -> {
+                    logout.logoutSuccessUrl("/api/v1/auth/logout");
+                    logout.deleteCookies("JSESSIONID");
+                })
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(daoAuthenticationProvider())
                 .build();
