@@ -1,15 +1,23 @@
 package com.hivework.domain.controller;
 
 import com.hivework.domain.dto.request.DeveloperResponseDto;
+import com.hivework.domain.dto.request.ProjectRequest;
+import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.projects.DeveloperResponseProjects;
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.entity.user.Users;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.user.UserService;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -28,13 +36,17 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Projects> findAll(){
-        return projectsService.findAll();
+    public Page<Projects> findAll(
+           @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+           @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+        return projectsService.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Projects> findByUserId(@PathVariable("id") Long id){
-        return projectsService.findByUserId(id);
+    public Page<Projects> findByUserId(@PathVariable("id") Long id,
+                                       @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                       @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+        return projectsService.findByUserId(id, PageRequest.of(pageNumber, pageSize));
     }
 
     @RequestMapping(value = "/response/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,5 +65,33 @@ public class ProjectController {
         developerResponseProjects.setMessage(developerResponseDto.getMessage());
 
         userResponseService.save(developerResponseProjects);
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Projects save(final @RequestPart("project") ProjectRequest projectRequest,
+                         final @RequestPart("images") List<MultipartFile> images){
+        Projects projects = new Projects();
+        final Users users = userService.getCurrentUser();
+
+        projects.setUsersCreator(users);
+        projects.setTitle(projectRequest.getTitle());
+        projects.setSkills(projectRequest.getSkills());
+        projects.setDescription(projectRequest.getDescription());
+        projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
+        projects.setSubCategories(projectRequest.getSubCategories());
+
+        String resourcesPath = new ClassPathResource("/src/main/resources/images/").getPath();
+        for (MultipartFile image : images) {
+            String imageName = projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
+            System.out.println(imageName);
+            try {
+                image.transferTo(Paths.get(resourcesPath + imageName));
+            } catch (IOException e) {
+                System.out.println(this.getClass() + " " + e.getMessage());
+            }
+            projects.getImages().add(new Image(null, "images/" + imageName));
+        }
+
+        return projectsService.save(projects);
     }
 }

@@ -1,6 +1,7 @@
 package com.hivework.domain.entity.projects;
 
 import com.hivework.domain.entity.categories.SubCategories;
+import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
 import jakarta.persistence.*;
@@ -21,6 +22,8 @@ public class Projects {
     private String description;
     @ManyToOne
     private Users usersCreator;
+    @OneToMany
+    private Set<Image> images = new HashSet<>();
     @ManyToOne
     private SubCategories subCategories;
     private Long price;
@@ -89,6 +92,14 @@ public class Projects {
 
     public LocalDateTime getDateOfCreate() {
         return dateOfCreate;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 
     public void setDateOfCreate(LocalDateTime dateOfCreate) {

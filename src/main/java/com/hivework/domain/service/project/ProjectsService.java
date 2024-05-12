@@ -2,9 +2,10 @@ package com.hivework.domain.service.project;
 
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.repository.ProjectsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ProjectsService {
@@ -20,12 +21,12 @@ public class ProjectsService {
         return projectsRepository.findById(id).orElse(null);
     }
 
-    public List<Projects> findByUserId(Long id){
-        return projectsRepository.findByUsersCreator_Id(id);
+    public Page<Projects> findByUserId(Long id, Pageable pageable){
+        return projectsRepository.findByUsersCreator_Id(id, pageable);
     }
 
-    public List<Projects> findAll(){
-        return projectsRepository.findAll();
+    public Page<Projects> findAll(Pageable pageable){
+        return projectsRepository.findAll(pageable);
     }
 
     public Projects save(Projects projects){
