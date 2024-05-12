@@ -2,6 +2,7 @@ package com.hivework.domain.entity.services;
 
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.image.Image;
+import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
 import jakarta.persistence.*;
 
@@ -24,6 +25,8 @@ public class Services {
     private SubCategories subCategories;
     @OneToMany()
     private Set<Image> images = new HashSet<>();
+    @ManyToMany
+    private Set<Skills> skills = new HashSet<>();
 
     public SubCategories getSubCategories() {
         return subCategories;
@@ -36,12 +39,14 @@ public class Services {
     public Services() {
     }
 
-    public Services(Long id, String title, Users developer, String description, Set<Image> images) {
+    public Services(Long id, String title, Users developer, String description, SubCategories subCategories, Set<Image> images, Set<Skills> skills) {
         this.id = id;
         this.title = title;
         this.developer = developer;
         this.description = description;
+        this.subCategories = subCategories;
         this.images = images;
+        this.skills = skills;
     }
 
     public Users getDeveloper() {
@@ -82,5 +87,13 @@ public class Services {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public Set<Skills> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skills> skills) {
+        this.skills = skills;
     }
 }

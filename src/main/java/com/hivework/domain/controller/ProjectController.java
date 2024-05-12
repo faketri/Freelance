@@ -37,25 +37,25 @@ public class ProjectController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Projects> findAll(
-           @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-           @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+            final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+            final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
         return projectsService.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Projects> findByUserId(@PathVariable("id") Long id,
-                                       @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-                                       @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+    public Page<Projects> findByUserId(final @PathVariable("id") Long id,
+                                       final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                       final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
         return projectsService.findByUserId(id, PageRequest.of(pageNumber, pageSize));
     }
 
     @RequestMapping(value = "/response/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DeveloperResponseProjects> UsersResponse(@PathVariable("id") Long id){
+    public List<DeveloperResponseProjects> UsersResponse(final @PathVariable("id") Long id){
         return userResponseService.findByProjectId(id);
     }
 
     @RequestMapping(value = "/response/{id}/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void UsersResponseSave(@PathVariable("id") Long id, @RequestBody DeveloperResponseDto developerResponseDto){
+    public void UsersResponseSave(final @PathVariable("id") Long id, final @RequestBody DeveloperResponseDto developerResponseDto){
         final DeveloperResponseProjects developerResponseProjects = new DeveloperResponseProjects();
         final Projects projects = projectsService.findById(developerResponseProjects.getProjects().getId());
         final Users users = userService.getCurrentUser();
