@@ -57,7 +57,7 @@ public class ServicesController {
         services.setDescription(serviceRequest.getDescription());
         services.setSubCategories(serviceRequest.getSubCategories());
 
-        String resourcesPath = new ClassPathResource("/src/main/resources/images/").getPath();
+        String resourcesPath = new ClassPathResource("/images/").getPath();
         for (MultipartFile image : images) {
             String imageName = services.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
             System.out.println(imageName);
