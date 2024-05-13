@@ -34,12 +34,13 @@ public class ImagesController {
                               HttpServletResponse response
     ) throws IOException {
         try {
-            InputStream in = new ClassPathResource(imageService.findById(id)
-                    .getPath()).getInputStream();
+            final Image image = imageService.findById(id);
+            final ClassPathResource classPathResource = new ClassPathResource(image.getPath());
+            final InputStream in = classPathResource.exists() ? classPathResource.getInputStream() : new FileInputStream(image.getPath());
             response.setContentType(MediaType.IMAGE_JPEG_VALUE);
             IOUtils.copy(in, response.getOutputStream());
         } catch (Exception e) {
-            InputStream in = new ClassPathResource("images/NotFound.png").getInputStream();
+            final InputStream in = new ClassPathResource("images/NotFound.png").getInputStream();
             response.setContentType(MediaType.IMAGE_JPEG_VALUE);
             IOUtils.copy(in, response.getOutputStream());
         }
