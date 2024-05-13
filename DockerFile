@@ -5,5 +5,7 @@ RUN mvn -f /app/pom.xml clean package -DskipTests
 
 FROM amazoncorretto:17
 WORKDIR /app
+RUN mkdir -p /app/images
+RUN chmod -R 755 /app/images
 COPY --from=builder /app/target/*.jar /app/*.jar
 ENTRYPOINT ["java", "-jar", "/app/*.jar"]
