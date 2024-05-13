@@ -80,7 +80,7 @@ public class ProjectController {
         projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
         projects.setSubCategories(projectRequest.getSubCategories());
 
-        String resourcesPath = new ClassPathResource("/src/main/resources/images/").getPath();
+        String resourcesPath = new ClassPathResource("/images/").getPath();
         for (MultipartFile image : images) {
             String imageName = projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
             System.out.println(imageName);
