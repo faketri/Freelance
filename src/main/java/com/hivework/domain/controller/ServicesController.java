@@ -57,16 +57,17 @@ public class ServicesController {
         services.setDescription(serviceRequest.getDescription());
         services.setSubCategories(serviceRequest.getSubCategories());
 
-        String resourcesPath = new ClassPathResource("/images/").getPath();
+        final String path = "/app/images/";
+        
         for (MultipartFile image : images) {
-            String imageName = services.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
+            String imageName = path + services.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
             System.out.println(imageName);
             try {
-                image.transferTo(Paths.get(resourcesPath + imageName));
+                image.transferTo(Paths.get(imageName));
             } catch (IOException e) {
                 System.out.println(this.getClass() + " " + e.getMessage());
             }
-            services.getImages().add(new Image(null, "images/" + imageName));
+            services.getImages().add(new Image(null, imageName));
         }
 
         return servicesService.save(services);
