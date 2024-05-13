@@ -80,16 +80,17 @@ public class ProjectController {
         projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
         projects.setSubCategories(projectRequest.getSubCategories());
 
-        String resourcesPath = new ClassPathResource("/images/").getPath();
+        final String path = "/app/images/";
+        
         for (MultipartFile image : images) {
-            String imageName = projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
+            String imageName = path + projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
             System.out.println(imageName);
             try {
-                image.transferTo(Paths.get(resourcesPath + imageName));
+                image.transferTo(Paths.get(imageName));
             } catch (IOException e) {
                 System.out.println(this.getClass() + " " + e.getMessage());
             }
-            projects.getImages().add(new Image(null, "images/" + imageName));
+            projects.getImages().add(new Image(null, imageName));
         }
 
         return projectsService.save(projects);
