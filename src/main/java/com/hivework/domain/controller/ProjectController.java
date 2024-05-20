@@ -79,6 +79,7 @@ public class ProjectController {
         projects.setDescription(projectRequest.getDescription());
         projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
         projects.setSubCategories(projectRequest.getSubCategories());
+        projects.setPrice(projectRequest.getPrice());
 
         final String path = "/app/images/";
         
