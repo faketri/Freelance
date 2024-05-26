@@ -85,30 +85,4 @@ public class Payments {
     public void setePaymentStatus(EPaymentStatus ePaymentStatus) {
         this.ePaymentStatus = ePaymentStatus;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Payments payments = (Payments) o;
-
-        if (!id.equals(payments.id)) return false;
-        if (!userPayment.equals(payments.userPayment)) return false;
-        if (!usersTakes.equals(payments.usersTakes)) return false;
-        if (!price.equals(payments.price)) return false;
-        if (ePaymentStatus != payments.ePaymentStatus) return false;
-        return dateOfCreate.equals(payments.dateOfCreate);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + userPayment.hashCode();
-        result = 31 * result + usersTakes.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + ePaymentStatus.hashCode();
-        result = 31 * result + dateOfCreate.hashCode();
-        return result;
-    }
 }
