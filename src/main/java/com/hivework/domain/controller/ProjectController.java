@@ -3,12 +3,15 @@ package com.hivework.domain.controller;
 import com.hivework.domain.dto.request.DeveloperResponseDto;
 import com.hivework.domain.dto.request.ProjectRequest;
 import com.hivework.domain.entity.image.Image;
+import com.hivework.domain.entity.orders.Orders;
 import com.hivework.domain.entity.projects.DeveloperResponseProjects;
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.entity.user.Users;
+import com.hivework.domain.service.orders.OrdersService;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.user.UserService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,11 +30,13 @@ public class ProjectController {
 
     private final ProjectsService projectsService;
     private final UserResponseService userResponseService;
+    private final OrdersService ordersService;
     private final UserService userService;
 
-    public ProjectController(ProjectsService projectsService, UserResponseService userResponseService, UserService userService) {
+    public ProjectController(ProjectsService projectsService, UserResponseService userResponseService, OrdersService ordersService, UserService userService) {
         this.projectsService = projectsService;
         this.userResponseService = userResponseService;
+        this.ordersService = ordersService;
         this.userService = userService;
     }
 
@@ -42,6 +47,11 @@ public class ProjectController {
         return projectsService.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Projects findById(@PathVariable final Long id){
+        return projectsService.findById(id);
+    }
+
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Projects> findByUserId(final @PathVariable("id") Long id,
                                        final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
@@ -50,8 +60,44 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/response/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DeveloperResponseProjects> UsersResponse(final @PathVariable("id") Long id){
+    public List<DeveloperResponseProjects> usersResponse(final @PathVariable("id") Long id){
         return userResponseService.findByProjectId(id);
+    }
+
+    @RequestMapping(value = "/response/{id}/create/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public DeveloperResponseProjects usersResponseCreate(final @PathVariable("id") Long id,
+                                                               final @PathVariable Long userId,
+                                                               final @RequestParam String message){
+        final Projects projects = projectsService.findById(id);
+
+        if (projects.getUsersCreator().getId().equals(userId))
+            throw new RuntimeException("Вы не можете откликнуться на свой заказ.");
+
+        final Users users = userService.findById(userId);
+
+        final DeveloperResponseProjects developerResponseProjects = new DeveloperResponseProjects();
+
+        developerResponseProjects.setProjects(projects);
+        developerResponseProjects.setMessage(message);
+        developerResponseProjects.setUsersDeveloper(users);
+
+        return userResponseService.save(developerResponseProjects);
+    }
+
+    @RequestMapping(value = "/response/{id}/accept/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Orders userResponseToProject(final @PathVariable("id") Long id, final @PathVariable Long userId){
+        final Projects project = projectsService.findById(id);
+        final Orders orders = new Orders();
+        final Users userDev = userService.findById(userId);
+
+        orders.setProjects(project);
+        orders.setDeveloper(userDev);
+        orders.setActive(true);
+
+        project.setActive(false);
+        projectsService.save(project);
+
+        return ordersService.save(orders);
     }
 
     @RequestMapping(value = "/response/{id}/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

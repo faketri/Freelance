@@ -34,17 +34,14 @@ public class ServicesController {
     public List<Services> findAll(){
         return servicesService.findAll();
     }
-
-    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Services> findAll(final @PathVariable("user_id") Long id){
-        return servicesService.findByUserId(id);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Services findById(final @PathVariable("id") Long id){
         return servicesService.findById(id);
     }
-
+    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Services> findAll(final @PathVariable("user_id") Long id){
+        return servicesService.findByUserId(id);
+    }
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Services save(final @RequestPart("service") ServiceRequest serviceRequest,
                          final @RequestPart("images") List<MultipartFile> images){

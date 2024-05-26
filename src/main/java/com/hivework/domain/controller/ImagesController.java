@@ -1,6 +1,7 @@
 package com.hivework.domain.controller;
 
 
+import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.service.image.ImageService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -8,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 

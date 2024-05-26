@@ -2,13 +2,11 @@ package com.hivework.domain.controller;
 
 import com.hivework.domain.entity.orders.Orders;
 import com.hivework.domain.service.orders.OrdersService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
@@ -22,7 +20,8 @@ public class OrdersController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Orders> findAll(){
-        return ordersService.findAll();
+    public Page<Orders> findAll(final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+        return ordersService.findAll(PageRequest.of(pageNumber, pageSize));
     }
 }

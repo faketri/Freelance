@@ -26,7 +26,7 @@ public class ProjectsService {
     }
 
     public Page<Projects> findAll(Pageable pageable){
-        return projectsRepository.findAll(pageable);
+        return projectsRepository.findByIsActive(true, pageable);
     }
 
     public Projects save(Projects projects){

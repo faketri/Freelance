@@ -2,7 +2,8 @@ package com.hivework.domain.service.orders;
 
 import com.hivework.domain.entity.orders.Orders;
 import com.hivework.domain.repository.OrdersRepository;
-import org.apache.catalina.LifecycleState;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public class OrdersService {
         return ordersRepository.findById(id).orElse(null);
     }
 
-    public List<Orders> findAll(){
-        return ordersRepository.findAll();
+    public Page<Orders> findAll(Pageable pageable){
+        return ordersRepository.findAll(pageable);
     }
+
+    public Orders save(Orders entity){ return ordersRepository.save(entity); }
 }

@@ -8,5 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProjectsRepository extends JpaRepository<Projects, Long> {
+
+
     Page<Projects> findByUsersCreator_Id(Long id, Pageable pageable);
+
+    Page<Projects> findByIsActive(Boolean isActive, Pageable pageable);
 }

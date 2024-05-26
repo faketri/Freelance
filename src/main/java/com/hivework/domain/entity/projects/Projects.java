@@ -31,6 +31,7 @@ public class Projects {
     private LocalDateTime dateOfCompletion;
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
+    private Boolean isActive;
 
     public Projects() {
     }
@@ -128,6 +129,14 @@ public class Projects {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     @Override
