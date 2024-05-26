@@ -22,7 +22,7 @@ public class Projects {
     private String description;
     @ManyToOne
     private Users usersCreator;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> images = new HashSet<>();
     @ManyToOne
     private SubCategories subCategories;
