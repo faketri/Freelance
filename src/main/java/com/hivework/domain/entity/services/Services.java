@@ -23,7 +23,7 @@ public class Services {
     @ManyToOne
     @JoinColumn(name = "sub_categories_id")
     private SubCategories subCategories;
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Image> images = new HashSet<>();
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
