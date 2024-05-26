@@ -36,24 +36,6 @@ public class Image {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Image image = (Image) o;
-
-        if (!id.equals(image.id)) return false;
-        return path.equals(image.path);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + path.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Image{" +
                 "id=" + id +
