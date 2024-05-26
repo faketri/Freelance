@@ -31,7 +31,7 @@ public class Projects {
     private LocalDateTime dateOfCompletion;
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     public Projects() {
     }
