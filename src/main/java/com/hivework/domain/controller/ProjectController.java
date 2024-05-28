@@ -115,7 +115,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Projects save(final @RequestPart("project") ProjectRequest projectRequest,
-                         final @RequestPart("images") List<MultipartFile> images){
+                         final @RequestPart(value = "images", required = false) List<MultipartFile> images){
         Projects projects = new Projects();
         final Users users = userService.getCurrentUser();
 
