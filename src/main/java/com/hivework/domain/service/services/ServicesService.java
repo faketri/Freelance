@@ -28,6 +28,7 @@ public class ServicesService {
     }
 
     public Services save(Services services){
+        services.setSkills(services.getSkills().stream().map(skillsService::save).collect(Collectors.toSet()));
         return servicesRepository.save(services);
     }
 }
