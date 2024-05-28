@@ -9,9 +9,9 @@ public class DeveloperResponseProjects {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Projects projects;
-    @OneToOne
+    @ManyToOne
     private Users usersDeveloper;
     @Column(nullable = false)
     private String message;
