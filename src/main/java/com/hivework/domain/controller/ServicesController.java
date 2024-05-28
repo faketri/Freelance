@@ -42,7 +42,7 @@ public class ServicesController {
     public List<Services> findAll(final @PathVariable("user_id") Long id){
         return servicesService.findByUserId(id);
     }
-    @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Services save(final @RequestPart("service") ServiceRequest serviceRequest,
                          final @RequestPart("images") List<MultipartFile> images){
         Services services = new Services();
