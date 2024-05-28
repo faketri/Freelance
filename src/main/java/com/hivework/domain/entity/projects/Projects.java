@@ -29,7 +29,7 @@ public class Projects {
     private Long price;
     private LocalDateTime dateOfCreate;
     private LocalDateTime dateOfCompletion;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Skills> skills = new HashSet<>();
     private Boolean isActive = true;
 
