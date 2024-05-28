@@ -4,7 +4,9 @@ import com.hivework.domain.dto.request.SingInRequest;
 import com.hivework.domain.dto.request.SingUpRequest;
 import com.hivework.domain.dto.response.UserResponse;
 import com.hivework.domain.service.auth.AuthService;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
