@@ -2,19 +2,25 @@ package com.hivework.domain.service.project;
 
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.repository.ProjectsRepository;
+import com.hivework.domain.repository.SkillsRepository;
+import com.hivework.domain.service.skills.SkillsService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 
 @Service
 public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
+    private final SkillsService skillsService;
 
 
-    public ProjectsService(ProjectsRepository projectsRepository) {
+    public ProjectsService(ProjectsRepository projectsRepository, SkillsService skillsService) {
         this.projectsRepository = projectsRepository;
+        this.skillsService = skillsService;
     }
 
     public Projects findById(Long id){
@@ -30,6 +36,7 @@ public class ProjectsService {
     }
 
     public Projects save(Projects projects){
+        projects.setSkills(projects.getSkills().stream().map(skillsService::save).collect(Collectors.toSet()));
         return projectsRepository.save(projects);
     }
 }

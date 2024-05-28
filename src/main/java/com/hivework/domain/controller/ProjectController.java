@@ -11,8 +11,6 @@ import com.hivework.domain.service.orders.OrdersService;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.user.UserService;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;

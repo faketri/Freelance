@@ -17,6 +17,7 @@ import com.hivework.domain.service.orders.OrdersService;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.services.ServicesService;
+import com.hivework.domain.service.skills.SkillsService;
 import com.hivework.domain.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.Jar;
@@ -28,10 +29,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class DomainApplication {
@@ -47,7 +45,7 @@ public class DomainApplication {
 								 UserService userService,
 								 PasswordEncoder passwordEncoder,
 								 CategoriesService categoriesService,
-								 SkillsRepository skillsRepository,
+								 SkillsService skillsRepository,
 								 UserResponseService userResponseService,
 								 HttpSession session){
 		return args -> {
@@ -90,7 +88,7 @@ public class DomainApplication {
 					new Categories(null, "Дизайн", subCategoriesForDesigner)
 			));
 
-			final List<Skills> skills = skillsRepository.saveAll(List.of(
+			final List<Skills> skills = skillsRepository.save(List.of(
 					new Skills(null, "Java"),
 					new Skills(null, "Android"),
 					new Skills(null, "Web"),
@@ -130,17 +128,12 @@ public class DomainApplication {
 
 			projects.setTitle("АНИМАЦУЯ СДЕЛАЙ ДА");
 			projects.setUsersCreator(valeraUser);
-			projects.getSkills().addAll(List.of(skills.get(0), skills.get(1)));
+			projects.getSkills().addAll(skills.subList(0, 2));
 			projects.setDescription("СДЕЛАЙ ЭТУ ТЕМКУ БРАТКА, ДАМ БАБОК");
 			projects.setDateOfCompletion(LocalDateTime.now().plusDays(10));
 
-			final Set<Skills> skillsForProject = new HashSet<>();
-			skillsForProject.add(skills.stream().filter(s -> s.getName().equals("3D Designer")).findFirst().get());
-			skillsForProject.add(skills.stream().filter(s -> s.getName().equals("Animation")).findFirst().get());
-			skillsForProject.add(skills.stream().filter(s -> s.getName().equals("Outsider")).findFirst().get());
-
-			projects.getSkills().addAll(skillsForProject);
-
+			//projects.getSkills().addAll(skillsForProject);
+			System.out.println(projects);
 			projects = projectsService.save(projects);
 
 			DeveloperResponseProjects developerResponseProjects = new DeveloperResponseProjects();

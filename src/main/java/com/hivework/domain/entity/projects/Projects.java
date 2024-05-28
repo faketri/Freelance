@@ -29,7 +29,7 @@ public class Projects {
     private Long price;
     private LocalDateTime dateOfCreate;
     private LocalDateTime dateOfCompletion;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<Skills> skills = new HashSet<>();
     private Boolean isActive = true;
 
@@ -143,9 +143,16 @@ public class Projects {
     public String toString() {
         return "Projects{" +
                 "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", usersCreator=" + usersCreator +
+                ", images=" + images +
+                ", subCategories=" + subCategories +
+                ", price=" + price +
                 ", dateOfCreate=" + dateOfCreate +
+                ", dateOfCompletion=" + dateOfCompletion +
+                ", skills=" + skills +
+                ", isActive=" + isActive +
                 '}';
     }
 }
