@@ -18,6 +18,11 @@ public class UsersController {
         this.userService = userService;
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserResponse getCurrentUser(){
+        return UserMapper.toResponse(userService.getCurrentUser());
+    }
+    
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse getUserById(@PathVariable("id") Long id){
         return UsersMapper.toResponse(userService.findById(id));
