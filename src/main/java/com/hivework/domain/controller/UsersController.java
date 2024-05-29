@@ -20,7 +20,7 @@ public class UsersController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse getCurrentUser(){
-        return UserMapper.toResponse(userService.getCurrentUser());
+        return UsersMapper.toResponse(userService.getCurrentUser());
     }
     
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
