@@ -3,6 +3,7 @@ package com.hivework.domain.security;
 import com.hivework.domain.service.user.UserDetailsServiceIml;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -39,8 +40,9 @@ public class SecurityConfig {
                         requests
                                 .requestMatchers("/api/v1/auth/sing-in").permitAll()
                                 .requestMatchers("/api/v1/auth/sing-up").permitAll()
+                                .requestMatchers(HttpMethod.GET, "").permitAll()
                                 .requestMatchers("/admin").authenticated()
-                                .anyRequest().permitAll())
+                                .anyRequest().authenticated())
                 .sessionManagement(manager -> {
                     manager.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)//
