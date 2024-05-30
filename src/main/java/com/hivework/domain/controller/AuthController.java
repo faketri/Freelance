@@ -45,5 +45,6 @@ public class AuthController {
                 response.addCookie(cookie);
             }
         }
+        request.getSession().invalidate();
     }
 }
