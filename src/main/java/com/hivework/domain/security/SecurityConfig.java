@@ -40,7 +40,7 @@ public class SecurityConfig {
                         requests
                                 .requestMatchers("/api/v1/auth/sing-in").permitAll()
                                 .requestMatchers("/api/v1/auth/sing-up").permitAll()
-                                .requestMatchers("/api/v1/auth/logout").authenticated()
+                                .requestMatchers("/api/v1/auth/logout").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                                 .requestMatchers("/admin").authenticated()
                                 .anyRequest().authenticated())
