@@ -33,7 +33,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        System.out.println("Авторизация");
         // Получаем массив куки
         Cookie[] cookies = request.getCookies();
 
@@ -47,26 +47,40 @@ public class SessionFilter extends OncePerRequestFilter {
         }
 
         Sessions sessions = null;
+        var requestSessions = request.getSession(false);
 
-        if (cookieSessions != null)
+
+        if (cookieSessions != null) {
             sessions = sessionService.findBySessionsId(cookieSessions.getValue());
+            System.out.println("КУКА " + cookieSessions.getValue());
+            if (requestSessions != null) System.out.println("SESSIONS " + requestSessions.getId());
+        }
 
+        if (SecurityContextHolder.getContext().getAuthentication() != null)
+            System.out.println("NOT NULL KENT");
         // Если сессия найдена и пользователь еще не аутентифицирован
         if (sessions != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Загружаем UserDetails по имени пользователя из сессии
-            UserDetails userDetails = userDetailsServiceIml.loadUserByUsername(sessions.getUsername());
 
-            // Создаем контекст безопасности и устанавливаем в него аутентификацию
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
-            var authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            context.setAuthentication(authToken);
-            SecurityContextHolder.setContext(context);
+            try{
+                // Загружаем UserDetails по имени пользователя из сессии
+                UserDetails userDetails = userDetailsServiceIml.loadUserByUsername(sessions.getUsername());
 
-            // Устанавливаем атрибуты куки
-            cookieSessions.setHttpOnly(true);
-            cookieSessions.setSecure(true);
-            response.addCookie(cookieSessions);
+                // Создаем контекст безопасности и устанавливаем в него аутентификацию
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                var authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                context.setAuthentication(authToken);
+                SecurityContextHolder.setContext(context);
+            }
+            catch (Exception ex){
+                System.out.println(ex.getMessage());
+            }
+            finally {
+                // Устанавливаем атрибуты куки
+                cookieSessions.setHttpOnly(true);
+                cookieSessions.setSecure(true);
+                response.addCookie(cookieSessions);
+            }
         }
 
 

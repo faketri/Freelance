@@ -14,6 +14,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    private String telegramUrl;
     @Column(nullable = false)
     private String login;
     @Column(nullable = false)
@@ -57,6 +58,14 @@ public class Users {
         this.skills = skills;
         this.balance = balance;
         this.dateOfCreate = dateOfCreate;
+    }
+
+    public String getTelegramUrl() {
+        return telegramUrl;
+    }
+
+    public void setTelegramUrl(String telegramUrl) {
+        this.telegramUrl = telegramUrl;
     }
 
     @PrePersist

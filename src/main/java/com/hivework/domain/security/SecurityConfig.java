@@ -52,6 +52,8 @@ public class SecurityConfig {
                 .logout((logout) -> {
                     logout.logoutSuccessUrl("/api/v1/auth/logout");
                     logout.deleteCookies("JSESSIONID");
+                    logout.clearAuthentication(true);
+                    //logout.invalidateHttpSession;
                 })
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(daoAuthenticationProvider())

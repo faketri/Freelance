@@ -9,21 +9,12 @@ import java.util.Set;
 
 public class ProjectRequest {
 
-    private Long id;
     private String title;
     private String description;
     private SubCategories subCategories;
     private Long price;
     private LocalDateTime dateOfCompletion;
     private Set<Skills> skills = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
