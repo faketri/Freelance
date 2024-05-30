@@ -189,7 +189,7 @@ public class DomainApplication {
 						.get()
 						.getSubCategories()
 						.stream()
-						.filter(subCat -> subCat.getName().equals("Сайты"))
+						.filter(subCat -> subCat.getName().equals("Бэкенд"))
 						.findFirst()
 						.get()
 		);
