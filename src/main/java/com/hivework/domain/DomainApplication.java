@@ -184,12 +184,12 @@ public class DomainApplication {
 		services.setDescription("СДЛЕАЮ ЭТО БРАТ");
 		services.setSubCategories(
 				categories.stream()
-						.filter(categories1 -> categories1.getName().equals("Разработка"))
+						.filter(categories1 -> categories1.getName().equals("Программирование и технологии"))
 						.findFirst()
 						.get()
 						.getSubCategories()
 						.stream()
-						.filter(subCat -> subCat.getName().equals("Мобильное приложение"))
+						.filter(subCat -> subCat.getName().equals("Маркетинг"))
 						.findFirst()
 						.get()
 		);
