@@ -53,6 +53,7 @@ public class ServicesController {
         services.setSkills(serviceRequest.getSkills());
         services.setDescription(serviceRequest.getDescription());
         services.setSubCategories(serviceRequest.getSubCategories());
+        services.setPrice(serviceRequest.getPrice());
 
         final String path = "/app/images/";
         

@@ -28,6 +28,16 @@ public class Services {
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
 
+    private Long price;
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
     public SubCategories getSubCategories() {
         return subCategories;
     }

@@ -3,6 +3,7 @@ package com.hivework.domain.dto.request;
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
+import org.apache.juli.logging.Log;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,16 @@ public class ServiceRequest {
     private String description;
     private SubCategories subCategories;
     private Set<Skills> skills = new HashSet<>();
+
+    private Long price;
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
 
     public String getTitle() {
         return title;
