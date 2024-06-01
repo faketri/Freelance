@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,5 +47,6 @@ public class AuthController {
             }
         }
         request.getSession().invalidate();
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 }
