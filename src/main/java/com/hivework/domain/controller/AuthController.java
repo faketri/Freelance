@@ -47,6 +47,6 @@ public class AuthController {
             }
         }
         request.getSession().invalidate();
-        SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContextHolder.setContext(SecurityContextHolder.createEmptyContext());
     }
 }
