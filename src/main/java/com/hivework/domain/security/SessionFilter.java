@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Component
-public class SessionFilter extends OncePerRequestFilter {
+public class SessionFilter extends OncePerRequestFilter
+{
 
     private final SessionService sessionService;
 
@@ -31,7 +32,7 @@ public class SessionFilter extends OncePerRequestFilter {
         this.userDetailsServiceIml = userDetailsServiceIml;
     }
 
-    @Override
+    //@Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("Авторизация");
         // Получаем массив куки

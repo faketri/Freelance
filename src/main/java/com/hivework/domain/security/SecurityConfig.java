@@ -46,26 +46,20 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> {
                     manager.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)//
+                        .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
                         .maximumSessions(1);
                 })
                 .logout((logout) -> {
                     logout.logoutSuccessUrl("/api/v1/auth/logout");
                     logout.deleteCookies("JSESSIONID");
                     logout.clearAuthentication(true);
-                    //logout.invalidateHttpSession;
+                    logout.invalidateHttpSession(true);
                 })
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(daoAuthenticationProvider())
                 .build();
     }
 
-
-    /**
-     * Dao's authentication provider dao authentication provider.
-     *
-     * @return the dao authentication provider
-     */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider =
@@ -75,33 +69,16 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
-    /**
-     * Password encoder b crypt password encoder.
-     *
-     * @return the b crypt password encoder
-     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
-    /**
-     * Custom user details service user details service.
-     *
-     * @return the user details service
-     */
     @Bean
     public UserDetailsService customUserDetailsService() {
         return userDetailsServiceImpl;
     }
 
-    /**
-     * Authentication manager.
-     *
-     * @param config the config
-     * @return the authentication manager
-     * @throws Exception the exception
-     */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config

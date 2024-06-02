@@ -114,33 +114,38 @@ public class ProjectController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Projects save(final @RequestPart("project") ProjectRequest projectRequest,
                          final @RequestPart(value = "images", required = false) List<MultipartFile> images){
+        try{
+            System.out.println("Projects save: start");
+            Projects projects = new Projects();
 
-        Projects projects = new Projects();
+            final Users users = userService.getCurrentUser();
 
-        final Users users = userService.getCurrentUser();
+            projects.setUsersCreator(users);
+            projects.setTitle(projectRequest.getTitle());
+            projects.setSkills(projectRequest.getSkills());
+            projects.setDescription(projectRequest.getDescription());
+            projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
+            projects.setSubCategories(projectRequest.getSubCategories());
+            projects.setPrice(projectRequest.getPrice());
 
-        projects.setUsersCreator(users);
-        projects.setTitle(projectRequest.getTitle());
-        projects.setSkills(projectRequest.getSkills());
-        projects.setDescription(projectRequest.getDescription());
-        projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
-        projects.setSubCategories(projectRequest.getSubCategories());
-        projects.setPrice(projectRequest.getPrice());
+            final String path = "/app/images/";
 
-        final String path = "/app/images/";
-
-        if (images != null)
-            for (MultipartFile image : images) {
-                String imageName = path + projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
-                System.out.println(imageName);
-                try {
-                    image.transferTo(Paths.get(imageName));
-                } catch (IOException e) {
-                    System.out.println(this.getClass() + " " + e.getMessage());
+            if (images != null)
+                for (MultipartFile image : images) {
+                    String imageName = path + projects.getTitle().replace(' ', '-') + "-" + image.getOriginalFilename();
+                    System.out.println(imageName);
+                    try {
+                        image.transferTo(Paths.get(imageName));
+                    } catch (IOException e) {
+                        System.out.println(this.getClass() + " " + e.getMessage());
+                    }
+                    projects.getImages().add(new Image(null, imageName));
                 }
-                projects.getImages().add(new Image(null, imageName));
-            }
 
-        return projectsService.save(projects);
+            return projectsService.save(projects);
+        }catch (Exception ex){
+            System.out.println("Projects save: " + ex.getMessage());
+        }
+        return null;
     }
 }
