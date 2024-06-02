@@ -37,8 +37,20 @@ public class AuthController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        response.addCookie(null);
-        request.getSession().invalidate();
-        SecurityContextHolder.getContext().setAuthentication(null);
+        try{
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    cookie.setValue(null);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+            request.getSession().invalidate();
+            SecurityContextHolder.getContext().setAuthentication(null);
+        }catch(Exception ex){
+            System.out.println("auth logout: " + ex.getMessage());
+        }
     }
 }
