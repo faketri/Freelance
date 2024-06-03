@@ -2,10 +2,12 @@ package com.hivework.domain.controller;
 
 import com.hivework.domain.dto.request.ProjectRequest;
 import com.hivework.domain.dto.request.ServiceRequest;
+import com.hivework.domain.dto.response.ServiceResponseDto;
 import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.entity.services.Services;
 import com.hivework.domain.entity.user.Users;
+import com.hivework.domain.mapper.ServicesMapper;
 import com.hivework.domain.service.services.ServicesService;
 import com.hivework.domain.service.user.UserService;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
@@ -31,21 +34,21 @@ public class ServicesController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Services> findAll(){
-        return servicesService.findAll();
+    public List<ServiceResponseDto> findAll(){
+        return servicesService.findAll().stream().map(ServicesMapper::toDto).collect(Collectors.toList());
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Services findById(final @PathVariable("id") Long id){
-        return servicesService.findById(id);
+    public ServiceResponseDto findById(final @PathVariable("id") Long id){
+        return ServicesMapper.toDto(servicesService.findById(id));
     }
 
-    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/users/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ServiceResponseDto> findAll(final @PathVariable("user_id") Long id) {
         return servicesService.findByUserId(id).stream().map(ServicesMapper::toDto).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Services save(final @RequestPart("service") ServiceRequest serviceRequest,
+    public ServiceResponseDto save(final @RequestPart("service") ServiceRequest serviceRequest,
                          final @RequestPart("images") List<MultipartFile> images){
         Services services = new Services();
         final Users users = userService.getCurrentUser();
@@ -70,6 +73,6 @@ public class ServicesController {
             services.getImages().add(new Image(null, imageName));
         }
 
-        return servicesService.save(services);
+        return ServicesMapper.toDto(servicesService.save(services));
     }
 }
