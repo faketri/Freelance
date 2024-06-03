@@ -38,7 +38,7 @@ public class ServicesController {
     public Services findById(final @PathVariable("id") Long id){
         return servicesService.findById(id);
     }
-    @RequestMapping(value = "/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/users/{user_id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Services> findAll(final @PathVariable("user_id") Long id){
         return servicesService.findByUserId(id);
     }
