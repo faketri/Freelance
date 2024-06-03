@@ -24,20 +24,20 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/sing-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponse singUp(@RequestBody SingUpRequest singUpRequest, HttpSession session){
+    public UserResponse singUp(@RequestBody SingUpRequest singUpRequest, HttpSession session) {
         System.out.println("reg");
         return authService.singUp(singUpRequest, session);
     }
 
     @RequestMapping(value = "/sing-in", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponse singIn(@RequestBody SingInRequest singInRequest, HttpSession session){
+    public UserResponse singIn(@RequestBody SingInRequest singInRequest, HttpSession session) {
         System.out.println("auth");
         return authService.singIn(singInRequest, session);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        try{
+        try {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -49,7 +49,7 @@ public class AuthController {
             }
             request.getSession().invalidate();
             SecurityContextHolder.getContext().setAuthentication(null);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println("auth logout: " + ex.getMessage());
         }
     }

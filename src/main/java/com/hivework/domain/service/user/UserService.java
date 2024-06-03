@@ -14,7 +14,7 @@ public class UserService {
         this.usersRepository = usersRepository;
     }
 
-    public Users findById(Long id){
+    public Users findById(Long id) {
         return usersRepository.findById(id).orElse(null);
     }
 
@@ -30,7 +30,7 @@ public class UserService {
         return findByLogin(username);
     }
 
-    public Users save(Users users){
+    public Users save(Users users) {
         return usersRepository.save(users);
     }
 }

@@ -14,11 +14,11 @@ public class ImageService {
         this.imageRepository = imageRepository;
     }
 
-    public Image findById(Long id){
+    public Image findById(Long id) {
         return imageRepository.findById(id).orElse(null);
     }
 
-    public Image save(Image image){
+    public Image save(Image image) {
         return imageRepository.save(image);
     }
 }

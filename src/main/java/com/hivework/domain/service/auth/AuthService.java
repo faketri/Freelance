@@ -6,14 +6,12 @@ import com.hivework.domain.dto.response.UserResponse;
 import com.hivework.domain.entity.session.Sessions;
 import com.hivework.domain.entity.user.ERole;
 import com.hivework.domain.entity.user.Users;
+import com.hivework.domain.exceptions.UserAlredyExistsExceptions;
 import com.hivework.domain.mapper.UsersMapper;
 import com.hivework.domain.service.user.UserDetailsServiceIml;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +32,7 @@ public class AuthService {
         this.sessionService = sessionService;
     }
 
-    public UserResponse singUp(SingUpRequest singUpRequest, HttpSession session){
+    public UserResponse singUp(SingUpRequest singUpRequest, HttpSession session) {
         Users users = new Users();
 
         users.setLogin(singUpRequest.getLogin());
@@ -48,7 +46,7 @@ public class AuthService {
 
         Sessions sessions = sessionService.findByUsername(users.getLogin());
 
-        if(sessions == null){
+        if (sessions == null) {
             sessions = new Sessions();
             sessions.setSessionId(session.getId());
             sessions.setUsername(users.getLogin());
@@ -59,7 +57,12 @@ public class AuthService {
         return UsersMapper.toResponse(users);
     }
 
-    public UserResponse singIn(SingInRequest singInRequest, HttpSession session){
+    public UserResponse singIn(SingInRequest singInRequest, HttpSession session) {
+
+        boolean userWithLoginExists = userDetailsServiceIml.getUserService().findByLogin(singInRequest.getLogin()) != null;
+
+        if (userWithLoginExists) throw new UserAlredyExistsExceptions("Пользователю с таким логином уже существует.");
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         singInRequest.getLogin(),
@@ -73,7 +76,7 @@ public class AuthService {
 
         Sessions sessions = sessionService.findByUsername(users.getLogin());
 
-        if(sessions == null){
+        if (sessions == null) {
             sessions = new Sessions();
             sessions.setSessionId(session.getId());
             sessions.setUsername(users.getLogin());

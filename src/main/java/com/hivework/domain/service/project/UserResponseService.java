@@ -14,11 +14,11 @@ public class UserResponseService {
         this.developerResponseProjectsRepository = developerResponseProjectsRepository;
     }
 
-    public List<DeveloperResponseProjects> findByProjectId(Long projectId){
+    public List<DeveloperResponseProjects> findByProjectId(Long projectId) {
         return developerResponseProjectsRepository.findByProjects_Id(projectId);
     }
 
-    public DeveloperResponseProjects save(DeveloperResponseProjects developerResponseProjects){
+    public DeveloperResponseProjects save(DeveloperResponseProjects developerResponseProjects) {
         return developerResponseProjectsRepository.save(developerResponseProjects);
     }
 }

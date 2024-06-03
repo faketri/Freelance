@@ -1,45 +1,28 @@
-package com.hivework.domain.entity.orders;
+package com.hivework.domain.dto.response;
 
-import com.hivework.domain.entity.payments.Payments;
 import com.hivework.domain.entity.projects.Projects;
-import com.hivework.domain.entity.user.Users;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class Orders {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class OrdersResponseDto {
+
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "projects_id")
     private Projects projects;
-    @ManyToOne
-    @JoinColumn(name = "developer_id")
-    private Users developer;
-    @OneToOne
-    @JoinColumn(name = "payments_id")
-    private Payments payments;
+    private UserResponse developer;
+    private PaymentsResponseDto payments;
     private Boolean isActive = true;
     private LocalDateTime dateOfCreate;
 
-    public Orders() {
+    public OrdersResponseDto() {
     }
 
-    public Orders(Long id, Projects projects, Users developer, Payments payments, Boolean isActive, LocalDateTime dateOfCreate) {
+    public OrdersResponseDto(Long id, Projects projects, UserResponse developer, PaymentsResponseDto payments, Boolean isActive, LocalDateTime dateOfCreate) {
         this.id = id;
         this.projects = projects;
         this.developer = developer;
         this.payments = payments;
         this.isActive = isActive;
         this.dateOfCreate = dateOfCreate;
-    }
-
-    @PrePersist
-    public void onCreate() {
-        this.dateOfCreate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -58,19 +41,19 @@ public class Orders {
         this.projects = projects;
     }
 
-    public Users getDeveloper() {
+    public UserResponse getDeveloper() {
         return developer;
     }
 
-    public void setDeveloper(Users developer) {
+    public void setDeveloper(UserResponse developer) {
         this.developer = developer;
     }
 
-    public Payments getPayments() {
+    public PaymentsResponseDto getPayments() {
         return payments;
     }
 
-    public void setPayments(Payments payments) {
+    public void setPayments(PaymentsResponseDto payments) {
         this.payments = payments;
     }
 

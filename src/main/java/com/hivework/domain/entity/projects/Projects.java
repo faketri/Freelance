@@ -46,8 +46,22 @@ public class Projects {
         this.skills = skills;
     }
 
+    public Projects(Long id, String title, String description, Users usersCreator, Set<Image> images, SubCategories subCategories, Long price, LocalDateTime dateOfCreate, LocalDateTime dateOfCompletion, Set<Skills> skills, Boolean isActive) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.usersCreator = usersCreator;
+        this.images = images;
+        this.subCategories = subCategories;
+        this.price = price;
+        this.dateOfCreate = dateOfCreate;
+        this.dateOfCompletion = dateOfCompletion;
+        this.skills = skills;
+        this.isActive = isActive;
+    }
+
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         this.dateOfCreate = LocalDateTime.now();
     }
 
@@ -95,16 +109,16 @@ public class Projects {
         return dateOfCreate;
     }
 
+    public void setDateOfCreate(LocalDateTime dateOfCreate) {
+        this.dateOfCreate = dateOfCreate;
+    }
+
     public Set<Image> getImages() {
         return images;
     }
 
     public void setImages(Set<Image> images) {
         this.images = images;
-    }
-
-    public void setDateOfCreate(LocalDateTime dateOfCreate) {
-        this.dateOfCreate = dateOfCreate;
     }
 
     public LocalDateTime getDateOfCompletion() {

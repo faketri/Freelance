@@ -15,19 +15,19 @@ public class CategoriesService {
         this.categoriesRepository = categoriesRepository;
     }
 
-    public Categories findById(Long id){
+    public Categories findById(Long id) {
         return categoriesRepository.findById(id).orElse(null);
     }
 
-    public List<Categories> findAll(){
+    public List<Categories> findAll() {
         return categoriesRepository.findAll();
     }
 
-    public Categories save(Categories categories){
+    public Categories save(Categories categories) {
         return categoriesRepository.save(categories);
     }
 
-    public List<Categories> save(List<Categories> categories){
+    public List<Categories> save(List<Categories> categories) {
         return categoriesRepository.saveAll(categories);
     }
 }

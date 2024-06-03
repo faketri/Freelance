@@ -31,7 +31,7 @@ public class ChatMessageService {
 
         var messages = chatMessageRepository.findByChatId(chatId);
 
-        if(!messages.isEmpty()) {
+        if (!messages.isEmpty()) {
             updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
         }
 
@@ -54,14 +54,14 @@ public class ChatMessageService {
                 .findBySenderIdAndRecipientIdAndStatus(senderId, recipientId, MessageStatus.DELIVERED)
                 .orElse(null);
 
-        if(chatMessage == null)
+        if (chatMessage == null)
             return;
 
         chatMessage.setStatus(status);
         chatMessageRepository.save(chatMessage);
     }
 
-    public ChatMessage save(ChatMessage chatMessage){
+    public ChatMessage save(ChatMessage chatMessage) {
         return chatMessageRepository.save(chatMessage);
     }
 }

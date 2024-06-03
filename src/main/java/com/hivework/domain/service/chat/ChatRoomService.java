@@ -2,7 +2,6 @@ package com.hivework.domain.service.chat;
 
 import com.hivework.domain.entity.messager.ChatRoom;
 import com.hivework.domain.repository.ChatRoomRepository;
-import org.apache.juli.logging.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,8 +22,8 @@ public class ChatRoomService {
                 .findBySenderIdAndRecipientId(senderId, recipientId)
                 .map(ChatRoom::getChatId)
                 .or(() -> {
-                    if(!createIfNotExist) {
-                        return  Optional.empty();
+                    if (!createIfNotExist) {
+                        return Optional.empty();
                     }
                     var chatId =
                             String.format("%s_%s", senderId, recipientId);

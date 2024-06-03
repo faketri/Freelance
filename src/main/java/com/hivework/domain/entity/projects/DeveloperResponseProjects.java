@@ -1,5 +1,6 @@
 package com.hivework.domain.entity.projects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hivework.domain.entity.user.Users;
 import jakarta.persistence.*;
 
@@ -10,6 +11,7 @@ public class DeveloperResponseProjects {
     @Column(name = "id", nullable = false)
     private Long id;
     @ManyToOne
+    @JsonIgnore
     private Projects projects;
     @ManyToOne
     private Users usersDeveloper;

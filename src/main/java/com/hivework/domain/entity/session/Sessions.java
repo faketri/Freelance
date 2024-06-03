@@ -1,6 +1,5 @@
 package com.hivework.domain.entity.session;
 
-import com.hivework.domain.repository.SessionsRepository;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -27,13 +26,13 @@ public class Sessions {
     }
 
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         this.dateOfCreate = LocalDateTime.now();
         this.lastAccessTime = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void onUpdate(){
+    public void onUpdate() {
         this.lastAccessTime = LocalDateTime.now();
     }
 

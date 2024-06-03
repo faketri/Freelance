@@ -10,13 +10,13 @@ import java.util.Set;
 
 public class UserResponse {
 
+    private final Set<ERole> roles = new HashSet<>();
     private Long id;
     private String login;
     private String email;
     private String firstName;
     private String lastName;
     private Image profileImage;
-    private final Set<ERole> roles = new HashSet<>();
     private Set<Skills> skills = new HashSet<>();
     private Long balance = 0L;
     private LocalDateTime dateOfCreate;

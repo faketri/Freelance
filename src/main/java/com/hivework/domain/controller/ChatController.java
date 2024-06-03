@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Controller
 public class ChatController {
 
-     private SimpMessagingTemplate messagingTemplate;
-     private ChatMessageService chatMessageService;
-     private ChatRoomService chatRoomService;
+    private SimpMessagingTemplate messagingTemplate;
+    private ChatMessageService chatMessageService;
+    private ChatRoomService chatRoomService;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessage chatMessage) {
@@ -27,7 +27,7 @@ public class ChatController {
         ChatMessage saved = chatMessageService.save(chatMessage);
 
         messagingTemplate.convertAndSendToUser(
-                chatMessage.getRecipientId().toString(),"/queue/messages",
+                chatMessage.getRecipientId().toString(), "/queue/messages",
                 new ChatNotification(
                         saved.getId(),
                         saved.getSenderId(),

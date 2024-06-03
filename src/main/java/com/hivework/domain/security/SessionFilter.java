@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @Component
-public class SessionFilter extends OncePerRequestFilter
-{
+public class SessionFilter extends OncePerRequestFilter {
 
     private final SessionService sessionService;
 
@@ -62,7 +61,7 @@ public class SessionFilter extends OncePerRequestFilter
         // Если сессия найдена и пользователь еще не аутентифицирован
         if (sessions != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            try{
+            try {
                 // Загружаем UserDetails по имени пользователя из сессии
                 UserDetails userDetails = userDetailsServiceIml.loadUserByUsername(sessions.getUsername());
 
@@ -72,11 +71,9 @@ public class SessionFilter extends OncePerRequestFilter
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
-            }
-            catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
-            }
-            finally {
+            } finally {
                 // Устанавливаем атрибуты куки
                 cookieSessions.setHttpOnly(true);
                 cookieSessions.setSecure(true);

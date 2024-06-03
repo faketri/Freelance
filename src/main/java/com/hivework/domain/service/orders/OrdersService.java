@@ -6,8 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class OrdersService {
 
@@ -17,13 +15,15 @@ public class OrdersService {
         this.ordersRepository = ordersRepository;
     }
 
-    public Orders findById(Long id){
+    public Orders findById(Long id) {
         return ordersRepository.findById(id).orElse(null);
     }
 
-    public Page<Orders> findAll(Pageable pageable){
+    public Page<Orders> findAll(Pageable pageable) {
         return ordersRepository.findAll(pageable);
     }
 
-    public Orders save(Orders entity){ return ordersRepository.save(entity); }
+    public Orders save(Orders entity) {
+        return ordersRepository.save(entity);
+    }
 }

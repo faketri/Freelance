@@ -22,7 +22,7 @@ public class CategoriesController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Categories> findAll(){
+    public List<Categories> findAll() {
         return categoriesService.findAll();
     }
 }

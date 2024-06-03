@@ -2,11 +2,17 @@ package com.hivework.domain.controller;
 
 import com.hivework.domain.dto.request.DeveloperResponseDto;
 import com.hivework.domain.dto.request.ProjectRequest;
+import com.hivework.domain.dto.response.OrdersResponseDto;
+import com.hivework.domain.dto.response.ProjectResponseDto;
+import com.hivework.domain.dto.response.UserDeveloperResponseDto;
 import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.orders.Orders;
 import com.hivework.domain.entity.projects.DeveloperResponseProjects;
 import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.entity.user.Users;
+import com.hivework.domain.mapper.OrdersMapper;
+import com.hivework.domain.mapper.ProjectMapper;
+import com.hivework.domain.mapper.UserDeveloperMapper;
 import com.hivework.domain.service.orders.OrdersService;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
@@ -20,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
@@ -39,33 +46,33 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Projects> findAll(
+    public Page<ProjectResponseDto> findAll(
             final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-            final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
-        return projectsService.findAll(PageRequest.of(pageNumber, pageSize));
+            final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize) {
+        return projectsService.findAll(PageRequest.of(pageNumber, pageSize)).map(ProjectMapper::toResponse);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Projects findById(@PathVariable final Long id){
-        return projectsService.findById(id);
+    public ProjectResponseDto findById(@PathVariable final Long id) {
+        return ProjectMapper.toResponse(projectsService.findById(id));
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Projects> findByUserId(final @PathVariable("id") Long id,
-                                       final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-                                       final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
-        return projectsService.findByUserId(id, PageRequest.of(pageNumber, pageSize));
+    public Page<ProjectResponseDto> findByUserId(final @PathVariable("id") Long id,
+                                                 final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                                 final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize) {
+        return projectsService.findByUserId(id, PageRequest.of(pageNumber, pageSize)).map(ProjectMapper::toResponse);
     }
 
     @RequestMapping(value = "/response/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DeveloperResponseProjects> usersResponse(final @PathVariable("id") Long id){
-        return userResponseService.findByProjectId(id);
+    public List<UserDeveloperResponseDto> usersResponse(final @PathVariable("id") Long id) {
+        return userResponseService.findByProjectId(id).stream().map(UserDeveloperMapper::toDto).collect(Collectors.toList());
     }
 
     @RequestMapping(value = "/response/{id}/create/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public DeveloperResponseProjects usersResponseCreate(final @PathVariable("id") Long id,
-                                                               final @PathVariable Long userId,
-                                                               final @RequestParam String message){
+    public UserDeveloperResponseDto usersResponseCreate(final @PathVariable("id") Long id,
+                                                        final @PathVariable Long userId,
+                                                        final @RequestParam String message) {
         final Projects projects = projectsService.findById(id);
 
         if (projects.getUsersCreator().getId().equals(userId))
@@ -79,11 +86,11 @@ public class ProjectController {
         developerResponseProjects.setMessage(message);
         developerResponseProjects.setUsersDeveloper(users);
 
-        return userResponseService.save(developerResponseProjects);
+        return UserDeveloperMapper.toDto(userResponseService.save(developerResponseProjects));
     }
 
     @RequestMapping(value = "/response/{id}/accept/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Orders userResponseToProject(final @PathVariable("id") Long id, final @PathVariable Long userId){
+    public OrdersResponseDto userResponseToProject(final @PathVariable("id") Long id, final @PathVariable Long userId) {
         final Projects project = projectsService.findById(id);
         final Orders orders = new Orders();
         final Users userDev = userService.findById(userId);
@@ -95,11 +102,11 @@ public class ProjectController {
         project.setActive(false);
         projectsService.save(project);
 
-        return ordersService.save(orders);
+        return OrdersMapper.toDto(ordersService.save(orders));
     }
 
     @RequestMapping(value = "/response/{id}/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void UsersResponseSave(final @PathVariable("id") Long id, final @RequestBody DeveloperResponseDto developerResponseDto){
+    public void usersResponseSave(final @PathVariable("id") Long id, final @RequestBody DeveloperResponseDto developerResponseDto) {
         final DeveloperResponseProjects developerResponseProjects = new DeveloperResponseProjects();
         final Projects projects = projectsService.findById(developerResponseProjects.getProjects().getId());
         final Users users = userService.getCurrentUser();
@@ -112,9 +119,9 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Projects save(final @RequestPart("project") ProjectRequest projectRequest,
-                         final @RequestPart(value = "images", required = false) List<MultipartFile> images){
-        try{
+    public ProjectResponseDto save(final @RequestPart("project") ProjectRequest projectRequest,
+                                   final @RequestPart(value = "images", required = false) List<MultipartFile> images) {
+        try {
             System.out.println("Projects save: start");
             Projects projects = new Projects();
 
@@ -142,8 +149,8 @@ public class ProjectController {
                     projects.getImages().add(new Image(null, imageName));
                 }
 
-            return projectsService.save(projects);
-        }catch (Exception ex){
+            return ProjectMapper.toResponse(projectsService.save(projects));
+        } catch (Exception ex) {
             System.out.println("Projects save: " + ex.getMessage());
         }
         return null;

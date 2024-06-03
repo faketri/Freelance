@@ -1,39 +1,30 @@
-package com.hivework.domain.entity.services;
+package com.hivework.domain.dto.response;
 
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.skills.Skills;
-import com.hivework.domain.entity.user.Users;
-import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-public class Services {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class ServiceResponseDto {
     private Long id;
     private String title;
-    @ManyToOne
-    @JoinColumn(name = "developer_id")
-    private Users developer;
+    private UserResponse developer;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "sub_categories_id")
+
     private SubCategories subCategories;
-    @OneToMany(cascade = CascadeType.ALL)
+
     private Set<Image> images = new HashSet<>();
-    @ManyToMany
+
     private Set<Skills> skills = new HashSet<>();
 
     private Long price;
 
-    public Services() {
+    public ServiceResponseDto() {
     }
 
-    public Services(Long id, String title, Users developer, String description, SubCategories subCategories, Set<Image> images, Set<Skills> skills, Long price) {
+    public ServiceResponseDto(Long id, String title, UserResponse developer, String description, SubCategories subCategories, Set<Image> images, Set<Skills> skills, Long price) {
         this.id = id;
         this.title = title;
         this.developer = developer;
@@ -42,30 +33,6 @@ public class Services {
         this.images = images;
         this.skills = skills;
         this.price = price;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public SubCategories getSubCategories() {
-        return subCategories;
-    }
-
-    public void setSubCategories(SubCategories subCategories) {
-        this.subCategories = subCategories;
-    }
-
-    public Users getDeveloper() {
-        return developer;
-    }
-
-    public void setDeveloper(Users developer) {
-        this.developer = developer;
     }
 
     public Long getId() {
@@ -84,12 +51,28 @@ public class Services {
         this.title = title;
     }
 
+    public UserResponse getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(UserResponse developer) {
+        this.developer = developer;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public SubCategories getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(SubCategories subCategories) {
+        this.subCategories = subCategories;
     }
 
     public Set<Image> getImages() {
@@ -106,5 +89,13 @@ public class Services {
 
     public void setSkills(Set<Skills> skills) {
         this.skills = skills;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

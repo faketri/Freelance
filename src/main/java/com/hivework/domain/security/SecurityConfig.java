@@ -46,8 +46,8 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> {
                     manager.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
-                        .maximumSessions(1);
+                            .sessionFixation(SessionManagementConfigurer.SessionFixationConfigurer::newSession)
+                            .maximumSessions(1);
                 })
                 .logout((logout) -> {
                     logout.logoutSuccessUrl("/api/v1/auth/logout");

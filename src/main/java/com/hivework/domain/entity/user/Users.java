@@ -10,12 +10,16 @@ import java.util.Set;
 
 @Entity
 public class Users {
+    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "users_id"))
+    private final Set<ERole> roles = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private String telegramUrl;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String login;
     @Column(nullable = false)
     private String email;
@@ -26,22 +30,10 @@ public class Users {
     @ManyToOne
     @JoinColumn(name = "profile_image_id")
     private Image profileImage;
-    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "users_id"))
-    private final Set<ERole> roles = new HashSet<>();
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
     private Long balance = 0L;
     private LocalDateTime dateOfCreate;
-
-    public Image getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(Image profileImage) {
-        this.profileImage = profileImage;
-    }
 
     public Users() {
     }
@@ -60,6 +52,14 @@ public class Users {
         this.dateOfCreate = dateOfCreate;
     }
 
+    public Image getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Image profileImage) {
+        this.profileImage = profileImage;
+    }
+
     public String getTelegramUrl() {
         return telegramUrl;
     }
@@ -69,7 +69,7 @@ public class Users {
     }
 
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         this.dateOfCreate = LocalDateTime.now();
     }
 

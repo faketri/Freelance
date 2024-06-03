@@ -34,7 +34,7 @@ public class Payments {
     }
 
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         this.dateOfCreate = LocalDateTime.now();
     }
 
