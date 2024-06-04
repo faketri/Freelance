@@ -73,7 +73,7 @@ public class AuthService {
 
         final Users users = userDetailsServiceIml.getUserService().findByLogin(singInRequest.getLogin());
 
-        session.setAttribute("username", users.getBalance());
+        session.setAttribute("username", users.getLogin());
 
         Sessions sessions = sessionService.findByUsername(users.getLogin());
 
