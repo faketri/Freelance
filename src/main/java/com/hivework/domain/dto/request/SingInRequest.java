@@ -5,6 +5,7 @@ public class SingInRequest {
     private String login;
     private String password;
 
+
     public SingInRequest() {
     }
 

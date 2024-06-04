@@ -4,15 +4,25 @@ public class SingUpRequest {
 
     private String login;
     private String email;
+    private String telegramUrl;
     private String password;
 
     public SingUpRequest() {
     }
 
-    public SingUpRequest(String login, String email, String password) {
+    public SingUpRequest(String login, String email, String telegramUrl, String password) {
         this.login = login;
         this.email = email;
+        this.telegramUrl = telegramUrl;
         this.password = password;
+    }
+
+    public String getTelegramUrl() {
+        return telegramUrl;
+    }
+
+    public void setTelegramUrl(String telegramUrl) {
+        this.telegramUrl = telegramUrl;
     }
 
     public String getLogin() {

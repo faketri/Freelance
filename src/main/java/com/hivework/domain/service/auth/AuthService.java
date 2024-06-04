@@ -43,6 +43,7 @@ public class AuthService {
         users.setLogin(singUpRequest.getLogin());
         users.setEmail(singUpRequest.getEmail());
         users.setPassword(passwordEncoder.encode(singUpRequest.getPassword()));
+        users.setTelegramUrl(singUpRequest.getTelegramUrl());
         users.getRoles().add(ERole.CUSTOMER);
 
         users = userDetailsServiceIml.getUserService().save(users);
