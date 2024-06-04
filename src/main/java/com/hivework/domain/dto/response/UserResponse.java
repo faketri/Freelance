@@ -17,22 +17,22 @@ public class UserResponse {
     private String firstName;
     private String lastName;
     private Image profileImage;
+    private String telegramUrl;
     private Set<Skills> skills = new HashSet<>();
-    private Long balance = 0L;
     private LocalDateTime dateOfCreate;
 
     public UserResponse() {
     }
 
-    public UserResponse(Long id, String login, String email, String firstName, String lastName, Image profileImage, Set<Skills> skills, Long balance, LocalDateTime dateOfCreate) {
+    public UserResponse(Long id, String login, String email, String firstName, String lastName, Image profileImage, String telegramUrl, Set<Skills> skills, LocalDateTime dateOfCreate) {
         this.id = id;
         this.login = login;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileImage = profileImage;
+        this.telegramUrl = telegramUrl;
         this.skills = skills;
-        this.balance = balance;
         this.dateOfCreate = dateOfCreate;
     }
 
@@ -110,5 +110,13 @@ public class UserResponse {
 
     public void setDateOfCreate(LocalDateTime dateOfCreate) {
         this.dateOfCreate = dateOfCreate;
+    }
+
+    public String getTelegramUrl() {
+        return telegramUrl;
+    }
+
+    public void setTelegramUrl(String telegramUrl) {
+        this.telegramUrl = telegramUrl;
     }
 }

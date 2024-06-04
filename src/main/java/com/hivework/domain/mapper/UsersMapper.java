@@ -7,14 +7,21 @@ public class UsersMapper {
 
     public static UserResponse toResponse(Users users) {
         return new UserResponse(users.getId(), users.getLogin(), users.getEmail(),
-                users.getFirstName(), users.getLastName(), users.getProfileImage(),
-                users.getSkills(), users.getBalance(), users.getDateOfCreate()
+                users.getFirstName(), users.getLastName(), users.getProfileImage(), users.getTelegramUrl(),
+                users.getSkills(), users.getDateOfCreate()
         );
     }
 
     public static Users toObj(UserResponse users) {
-        return new Users(users.getId(), users.getLogin(), users.getEmail(),
-                users.getFirstName(), users.getLastName(), null,
-                users.getProfileImage(), users.getSkills(), users.getBalance(), users.getDateOfCreate());
+        return new Users(users.getId(),
+                users.getTelegramUrl(),
+                users.getLogin(),
+                users.getEmail(),
+                users.getFirstName(),
+                users.getLastName(),
+                null,
+                users.getProfileImage(),
+                users.getSkills(),
+                users.getDateOfCreate());
     }
 }

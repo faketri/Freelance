@@ -32,15 +32,14 @@ public class Users {
     private Image profileImage;
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
-    private Long balance = 0L;
     private LocalDateTime dateOfCreate;
 
     public Users() {
     }
 
-    public Users(Long id, String login, String email, String firstName, String lastName, String password,
-                 Image profileImage, Set<Skills> skills, Long balance, LocalDateTime dateOfCreate) {
+    public Users(Long id, String telegramUrl, String login, String email, String firstName, String lastName, String password, Image profileImage, Set<Skills> skills, LocalDateTime dateOfCreate) {
         this.id = id;
+        this.telegramUrl = telegramUrl;
         this.login = login;
         this.email = email;
         this.firstName = firstName;
@@ -48,7 +47,6 @@ public class Users {
         this.password = password;
         this.profileImage = profileImage;
         this.skills = skills;
-        this.balance = balance;
         this.dateOfCreate = dateOfCreate;
     }
 
