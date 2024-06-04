@@ -31,7 +31,7 @@ public class AuthController {
 
     @RequestMapping(value = "/sing-in", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse singIn(@RequestBody SingInRequest singInRequest, HttpSession session) {
-        System.out.println("auth");
+        System.out.println("singIn: ");
         return authService.singIn(singInRequest, session);
     }
 
