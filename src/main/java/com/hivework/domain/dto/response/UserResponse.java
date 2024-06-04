@@ -96,14 +96,6 @@ public class UserResponse {
         this.skills = skills;
     }
 
-    public Long getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
-
     public LocalDateTime getDateOfCreate() {
         return dateOfCreate;
     }
