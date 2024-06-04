@@ -33,6 +33,11 @@ public class AuthService {
     }
 
     public UserResponse singUp(SingUpRequest singUpRequest, HttpSession session) {
+
+        boolean userWithLoginExists = userDetailsServiceIml.getUserService().findByLogin(singUpRequest.getLogin()) != null;
+
+        if (userWithLoginExists) throw new UserAlredyExistsExceptions("Пользователю с таким логином уже существует.");
+        
         Users users = new Users();
 
         users.setLogin(singUpRequest.getLogin());
@@ -58,10 +63,6 @@ public class AuthService {
     }
 
     public UserResponse singIn(SingInRequest singInRequest, HttpSession session) {
-
-        boolean userWithLoginExists = userDetailsServiceIml.getUserService().findByLogin(singInRequest.getLogin()) != null;
-
-        if (userWithLoginExists) throw new UserAlredyExistsExceptions("Пользователю с таким логином уже существует.");
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
