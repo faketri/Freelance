@@ -37,7 +37,7 @@ services:
       DB_CONNECT: ${DB_CONNECT:-jdbc:postgresql://postgres_freelance/postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SecretPassword(!)}
-    image: postgres_freelance
+    image: freelance_back
     build:
       context: .
       dockerfile: DockerFile
