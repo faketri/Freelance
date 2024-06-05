@@ -138,13 +138,13 @@ public class DomainApplication {
             valera.setPassword(passwordEncoder.encode("123123123"));
 
             final Users kris = new Users();
-            kris.setLogin("kris");
+            kris.setLogin("kris123");
             kris.setEmail("krisOtmoroz@mail.ru");
             kris.getRoles().add(ERole.CUSTOMER);
             kris.setPassword(passwordEncoder.encode("123123123"));
 
             final Users graf = new Users();
-            graf.setLogin("graf");
+            graf.setLogin("graf123");
             graf.setEmail("grafTaynoDernyl@mail.ru");
             graf.getRoles().add(ERole.CUSTOMER);
             graf.setPassword(passwordEncoder.encode("123123123"));
