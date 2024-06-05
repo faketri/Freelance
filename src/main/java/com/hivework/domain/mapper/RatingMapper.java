@@ -1,13 +1,13 @@
 package com.hivework.domain.mapper;
 
-import com.hivework.domain.dto.response.ProjectResponseDto;
 import com.hivework.domain.dto.response.RatingResponseDto;
-import com.hivework.domain.entity.projects.Projects;
 import com.hivework.domain.entity.rating.Rating;
 
 public class RatingMapper {
 
     public static RatingResponseDto toResponse(Rating rating) {
+        if (rating == null) return null;
+
         return new RatingResponseDto(rating.getId(),
                 rating.getTitle(),
                 UsersMapper.toResponse(rating.getUserTo()),
@@ -17,6 +17,8 @@ public class RatingMapper {
     }
 
     public static Rating toObj(RatingResponseDto ratingResponseDto) {
+        if (ratingResponseDto == null) return null;
+
         return new Rating(
                 ratingResponseDto.getId(),
                 ratingResponseDto.getTitle(),
