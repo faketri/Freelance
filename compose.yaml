@@ -48,7 +48,6 @@ services:
     depends_on:
       - postgres_freelance
 
-
 networks:
   freelance_back:
     driver: bridge

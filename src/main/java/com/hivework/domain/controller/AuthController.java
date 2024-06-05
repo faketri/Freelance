@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +25,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/sing-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponse singUp(@RequestBody SingUpRequest singUpRequest, HttpSession session) {
+    public UserResponse singUp(@Valid @RequestBody SingUpRequest singUpRequest, HttpSession session) {
         System.out.println("sing-up: " + singUpRequest);
         return authService.singUp(singUpRequest, session);
     }
 
     @RequestMapping(value = "/sing-in", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponse singIn(@RequestBody SingInRequest singInRequest, HttpSession session) {
+    public UserResponse singIn(@Valid @RequestBody SingInRequest singInRequest, HttpSession session) {
         System.out.println("singIn: ");
         return authService.singIn(singInRequest, session);
     }
