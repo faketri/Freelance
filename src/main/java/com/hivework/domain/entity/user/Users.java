@@ -4,16 +4,14 @@ import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.skills.Skills;
 import jakarta.persistence.*;
 
+import javax.management.relation.Role;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Users {
-    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "users_id"))
-    private final Set<ERole> roles = new HashSet<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -32,12 +30,16 @@ public class Users {
     private Image profileImage;
     @ManyToMany
     private Set<Skills> skills = new HashSet<>();
+    @ElementCollection(targetClass = ERole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "users_id"))
+    private Set<ERole> roles = new HashSet<>();
     private LocalDateTime dateOfCreate;
 
     public Users() {
     }
 
-    public Users(Long id, String telegramUrl, String login, String email, String firstName, String lastName, String password, Image profileImage, Set<Skills> skills, LocalDateTime dateOfCreate) {
+    public Users(Long id, String telegramUrl, String login, String email, String firstName, String lastName, String password, Image profileImage, Set<Skills> skills, Set<ERole> roles,  LocalDateTime dateOfCreate) {
         this.id = id;
         this.telegramUrl = telegramUrl;
         this.login = login;
@@ -47,6 +49,7 @@ public class Users {
         this.password = password;
         this.profileImage = profileImage;
         this.skills = skills;
+        this.roles = roles;
         this.dateOfCreate = dateOfCreate;
     }
 

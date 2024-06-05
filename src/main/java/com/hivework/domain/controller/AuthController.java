@@ -25,7 +25,7 @@ public class AuthController {
 
     @RequestMapping(value = "/sing-up", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse singUp(@RequestBody SingUpRequest singUpRequest, HttpSession session) {
-        System.out.println("reg");
+        System.out.println("sing-up: " + singUpRequest);
         return authService.singUp(singUpRequest, session);
     }
 

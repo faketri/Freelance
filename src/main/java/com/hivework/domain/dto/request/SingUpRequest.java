@@ -48,4 +48,14 @@ public class SingUpRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "SingUpRequest{" +
+                "login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", telegramUrl='" + telegramUrl + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

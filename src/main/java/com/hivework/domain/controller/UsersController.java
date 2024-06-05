@@ -5,6 +5,7 @@ import com.hivework.domain.mapper.UsersMapper;
 import com.hivework.domain.service.user.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -26,5 +27,10 @@ public class UsersController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse getUserById(@PathVariable("id") Long id) {
         return UsersMapper.toResponse(userService.findById(id));
+    }
+
+    @RequestMapping(path = "/{id}/update/image", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserResponse updateImage(MultipartFile multipartFile) {
+        return null;
     }
 }

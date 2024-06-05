@@ -10,7 +10,6 @@ import java.util.Set;
 
 public class UserResponse {
 
-    private final Set<ERole> roles = new HashSet<>();
     private Long id;
     private String login;
     private String email;
@@ -19,12 +18,13 @@ public class UserResponse {
     private Image profileImage;
     private String telegramUrl;
     private Set<Skills> skills = new HashSet<>();
+    private Set<ERole> roles = new HashSet<>();
     private LocalDateTime dateOfCreate;
 
     public UserResponse() {
     }
 
-    public UserResponse(Long id, String login, String email, String firstName, String lastName, Image profileImage, String telegramUrl, Set<Skills> skills, LocalDateTime dateOfCreate) {
+    public UserResponse(Long id, String login, String email, String firstName, String lastName, Image profileImage, String telegramUrl, Set<Skills> skills, Set<ERole> roles, LocalDateTime dateOfCreate) {
         this.id = id;
         this.login = login;
         this.email = email;
@@ -33,6 +33,7 @@ public class UserResponse {
         this.profileImage = profileImage;
         this.telegramUrl = telegramUrl;
         this.skills = skills;
+        this.roles = roles;
         this.dateOfCreate = dateOfCreate;
     }
 
@@ -84,10 +85,6 @@ public class UserResponse {
         this.profileImage = profileImage;
     }
 
-    public Set<ERole> getRoles() {
-        return roles;
-    }
-
     public Set<Skills> getSkills() {
         return skills;
     }
@@ -102,6 +99,14 @@ public class UserResponse {
 
     public void setDateOfCreate(LocalDateTime dateOfCreate) {
         this.dateOfCreate = dateOfCreate;
+    }
+
+    public Set<ERole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<ERole> roles) {
+        this.roles = roles;
     }
 
     public String getTelegramUrl() {
