@@ -40,7 +40,7 @@ public class AuthController {
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("logout: " + request.getSession().getId());
         try {
-            /*Cookie[] cookies = request.getCookies();
+            Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     cookie.setValue(null);
@@ -49,8 +49,9 @@ public class AuthController {
                     response.addCookie(cookie);
                 }
             }
-            request.getSession().invalidate();
-            SecurityContextHolder.getContext().setAuthentication(null);*/
+            request.getSession(false).invalidate();
+            request.getSession(true);
+            SecurityContextHolder.getContext().setAuthentication(null);
         } catch (Exception ex) {
             System.out.println("auth logout: " + ex.getMessage());
         }
