@@ -10,13 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ProjectRequest {
-    @NotBlank(message = "Название заказа не может быть пустое")
     private String title;
-    @NotBlank(message = "Описание заказа не может быть пустое")
     private String description;
     private SubCategories subCategories;
-    @NotBlank(message = "Цена не может быть пустой")
-    @Min(value = 1000)
     private Integer price;
     private LocalDateTime dateOfCompletion;
     private Set<Skills> skills = new HashSet<>();

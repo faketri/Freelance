@@ -9,11 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ServiceRequest {
-    @NotBlank(message = "Название услуги не может быть пустое")
     private String title;
-    @NotBlank(message = "Услуга не может быть без разработчика.")
     private Users developer;
-    @NotBlank(message = "Описание услуги не может быть пустое")
     private String description;
 
     private SubCategories subCategories;
