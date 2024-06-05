@@ -54,9 +54,10 @@ public class AuthService {
 
         if (sessions == null) {
             sessions = new Sessions();
-            sessions.setSessionId(session.getId());
-            sessions.setUsername(users.getLogin());
         }
+
+        sessions.setSessionId(session.getId());
+        sessions.setUsername(users.getLogin());
 
         sessionService.save(sessions);
 
@@ -80,9 +81,10 @@ public class AuthService {
 
         if (sessions == null) {
             sessions = new Sessions();
-            sessions.setSessionId(session.getId());
-            sessions.setUsername(users.getLogin());
         }
+
+        sessions.setSessionId(session.getId());
+        sessions.setUsername(users.getLogin());
 
         sessionService.save(sessions);
 

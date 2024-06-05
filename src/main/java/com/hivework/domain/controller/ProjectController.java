@@ -17,6 +17,7 @@ import com.hivework.domain.service.orders.OrdersService;
 import com.hivework.domain.service.project.ProjectsService;
 import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
@@ -119,7 +120,7 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ProjectResponseDto save(final @RequestPart("project") ProjectRequest projectRequest,
+    public ProjectResponseDto save(final @RequestPart("project") @Valid ProjectRequest projectRequest,
                                    final @RequestPart(value = "images", required = false) List<MultipartFile> images) {
         try {
             System.out.println("Projects save: start");
@@ -133,7 +134,7 @@ public class ProjectController {
             projects.setDescription(projectRequest.getDescription());
             projects.setDateOfCompletion(projectRequest.getDateOfCompletion());
             projects.setSubCategories(projectRequest.getSubCategories());
-            projects.setPrice(projectRequest.getPrice());
+            projects.setPrice(projectRequest.getPrice().longValue());
 
             final String path = "/app/images/";
 

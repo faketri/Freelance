@@ -10,6 +10,7 @@ import com.hivework.domain.entity.user.Users;
 import com.hivework.domain.mapper.ServicesMapper;
 import com.hivework.domain.service.services.ServicesService;
 import com.hivework.domain.service.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +49,7 @@ public class ServicesController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ServiceResponseDto save(final @RequestPart("service") ServiceRequest serviceRequest,
+    public ServiceResponseDto save(final @RequestPart("service") @Valid ServiceRequest serviceRequest,
                          final @RequestPart("images") List<MultipartFile> images){
         Services services = new Services();
         final Users users = userService.getCurrentUser();
@@ -58,7 +59,7 @@ public class ServicesController {
         services.setSkills(serviceRequest.getSkills());
         services.setDescription(serviceRequest.getDescription());
         services.setSubCategories(serviceRequest.getSubCategories());
-        services.setPrice(serviceRequest.getPrice());
+        services.setPrice(serviceRequest.getPrice().longValue());
 
         final String path = "/app/images/";
         

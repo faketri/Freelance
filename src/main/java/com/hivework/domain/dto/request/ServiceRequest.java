@@ -3,24 +3,29 @@ package com.hivework.domain.dto.request;
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ServiceRequest {
+    @NotBlank(message = "Название услуги не может быть пустое")
     private String title;
+    @NotBlank(message = "Услуга не может быть без разработчика.")
     private Users developer;
+    @NotBlank(message = "Описание услуги не может быть пустое")
     private String description;
+
     private SubCategories subCategories;
     private Set<Skills> skills = new HashSet<>();
 
-    private Long price;
+    private Integer price;
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

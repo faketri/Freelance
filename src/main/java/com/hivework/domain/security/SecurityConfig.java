@@ -50,7 +50,7 @@ public class SecurityConfig {
                             .maximumSessions(1);
                 })
                 .logout((logout) -> {
-                    logout.logoutSuccessUrl("/api/v1/auth/logout");
+                    logout.logoutSuccessUrl("/api/v1/auth/logout").permitAll();
                     logout.deleteCookies("JSESSIONID");
                     logout.clearAuthentication(true);
                     logout.invalidateHttpSession(true);

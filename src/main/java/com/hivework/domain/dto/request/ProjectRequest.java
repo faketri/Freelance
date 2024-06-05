@@ -2,17 +2,22 @@ package com.hivework.domain.dto.request;
 
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ProjectRequest {
-
+    @NotBlank(message = "Название заказа не может быть пустое")
     private String title;
+    @NotBlank(message = "Описание заказа не может быть пустое")
     private String description;
     private SubCategories subCategories;
-    private Long price;
+    @NotBlank(message = "Цена не может быть пустой")
+    @Min(value = 1000)
+    private Integer price;
     private LocalDateTime dateOfCompletion;
     private Set<Skills> skills = new HashSet<>();
 
@@ -40,11 +45,11 @@ public class ProjectRequest {
         this.subCategories = subCategories;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
