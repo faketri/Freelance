@@ -21,19 +21,19 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RatingResponseDto findById(@PathVariable("id") Long id){
         return RatingMapper.toResponse(ratingService.findById(id));
     }
 
-    @RequestMapping("/user/{id}")
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public Page<RatingResponseDto> findByUserTo(@PathVariable("id") Long id,
                                      final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
                                      final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
         return ratingService.findByUserTo(id, PageRequest.of(pageNumber, pageSize)).map(RatingMapper::toResponse);
     }
 
-    @RequestMapping("/user/from/{id}")
+    @RequestMapping(value = "/user/from/{id}", method = RequestMethod.GET)
     public Page<RatingResponseDto> findByUserFrom(@PathVariable("id") Long id,
                                      final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
                                      final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){

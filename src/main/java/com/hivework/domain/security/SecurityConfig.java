@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/auth/sing-up").permitAll()
                                 .requestMatchers("/api/v1/auth/logout").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/rating/**").permitAll()
                                 .requestMatchers("/admin").authenticated()
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> {
