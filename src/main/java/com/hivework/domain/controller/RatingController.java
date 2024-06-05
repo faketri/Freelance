@@ -1,5 +1,6 @@
 package com.hivework.domain.controller;
 
+import com.hivework.domain.dto.request.RatingRequestDto;
 import com.hivework.domain.dto.response.RatingResponseDto;
 import com.hivework.domain.entity.rating.Rating;
 import com.hivework.domain.mapper.RatingMapper;
@@ -39,8 +40,8 @@ public class RatingController {
         return ratingService.findByUserFrom(id, PageRequest.of(pageNumber, pageSize)).map(RatingMapper::toResponse);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public RatingResponseDto save(@RequestBody Rating rating){
-        return RatingMapper.toResponse(ratingService.save(rating));
+    @RequestMapping(value = "user/{id}/create", method = RequestMethod.POST)
+    public RatingResponseDto save(@PathVariable("id") Long usersToId, @RequestBody RatingRequestDto rating){
+        return RatingMapper.toResponse(ratingService.create(rating, usersToId));
     }
 }
