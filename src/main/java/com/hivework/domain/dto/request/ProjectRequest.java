@@ -2,8 +2,6 @@ package com.hivework.domain.dto.request;
 
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

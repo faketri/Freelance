@@ -3,7 +3,6 @@ package com.hivework.domain.dto.request;
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.skills.Skills;
 import com.hivework.domain.entity.user.Users;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.HashSet;
 import java.util.Set;

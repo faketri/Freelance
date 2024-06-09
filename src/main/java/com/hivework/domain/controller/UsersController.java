@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RestController
 @CrossOrigin({"http://localhost:8080", "http://192.168.1.106:8080/"})
@@ -29,8 +32,18 @@ public class UsersController {
         return UsersMapper.toResponse(userService.findById(id));
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserResponse> findAll() {
+        return userService.findAll().stream().map(UsersMapper::toResponse).collect(Collectors.toList());
+    }
+
     @RequestMapping(path = "/{id}/update/image", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse updateImage(MultipartFile multipartFile) {
-        return null;
+        return UsersMapper.toResponse(userService.updateImage(multipartFile));
+    }
+
+    @RequestMapping(path = "/{id}/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void delete(@PathVariable("id") Long id) {
+        userService.deleteById(id);
     }
 }

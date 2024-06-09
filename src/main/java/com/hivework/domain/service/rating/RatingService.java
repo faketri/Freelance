@@ -20,19 +20,19 @@ public class RatingService {
         this.userService = userService;
     }
 
-    public Rating findById(Long id){
+    public Rating findById(Long id) {
         return ratingRepository.findById(id).orElse(null);
     }
 
-    public Page<Rating> findByUserTo(Long id, Pageable pageable){
+    public Page<Rating> findByUserTo(Long id, Pageable pageable) {
         return ratingRepository.findByUserTo_Id(id, pageable);
     }
 
-    public Page<Rating> findByUserFrom(Long id, Pageable pageable){
+    public Page<Rating> findByUserFrom(Long id, Pageable pageable) {
         return ratingRepository.findByUserFrom_Id(id, pageable);
     }
 
-    public Rating create(RatingRequestDto ratingRequestDto, Long userToId){
+    public Rating create(RatingRequestDto ratingRequestDto, Long userToId) {
         Users users = userService.findById(userToId);
         Users usersFrom = userService.getCurrentUser();
 
@@ -47,7 +47,7 @@ public class RatingService {
         return ratingRepository.save(rating);
     }
 
-    public Rating save(Rating rating){
+    public Rating save(Rating rating) {
         return ratingRepository.save(rating);
     }
 }

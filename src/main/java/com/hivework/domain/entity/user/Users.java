@@ -4,7 +4,6 @@ import com.hivework.domain.entity.image.Image;
 import com.hivework.domain.entity.skills.Skills;
 import jakarta.persistence.*;
 
-import javax.management.relation.Role;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(Long id, String telegramUrl, String login, String email, String firstName, String lastName, String password, Image profileImage, Set<Skills> skills, Set<ERole> roles,  LocalDateTime dateOfCreate) {
+    public Users(Long id, String telegramUrl, String login, String email, String firstName, String lastName, String password, Image profileImage, Set<Skills> skills, Set<ERole> roles, LocalDateTime dateOfCreate) {
         this.id = id;
         this.telegramUrl = telegramUrl;
         this.login = login;

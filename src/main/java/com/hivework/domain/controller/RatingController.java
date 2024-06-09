@@ -2,7 +2,6 @@ package com.hivework.domain.controller;
 
 import com.hivework.domain.dto.request.RatingRequestDto;
 import com.hivework.domain.dto.response.RatingResponseDto;
-import com.hivework.domain.entity.rating.Rating;
 import com.hivework.domain.mapper.RatingMapper;
 import com.hivework.domain.service.rating.RatingService;
 import org.springframework.data.domain.Page;
@@ -22,26 +21,26 @@ public class RatingController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public RatingResponseDto findById(@PathVariable("id") Long id){
+    public RatingResponseDto findById(@PathVariable("id") Long id) {
         return RatingMapper.toResponse(ratingService.findById(id));
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public Page<RatingResponseDto> findByUserTo(@PathVariable("id") Long id,
-                                     final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-                                     final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+                                                final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                                final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize) {
         return ratingService.findByUserTo(id, PageRequest.of(pageNumber, pageSize)).map(RatingMapper::toResponse);
     }
 
     @RequestMapping(value = "/user/from/{id}", method = RequestMethod.GET)
     public Page<RatingResponseDto> findByUserFrom(@PathVariable("id") Long id,
-                                     final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
-                                     final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize){
+                                                  final @RequestParam(name = "number", required = true, defaultValue = "0") Integer pageNumber,
+                                                  final @RequestParam(name = "size", required = true, defaultValue = "20") Integer pageSize) {
         return ratingService.findByUserFrom(id, PageRequest.of(pageNumber, pageSize)).map(RatingMapper::toResponse);
     }
 
     @RequestMapping(value = "user/{id}/create", method = RequestMethod.POST)
-    public RatingResponseDto save(@PathVariable("id") Long usersToId, @RequestBody RatingRequestDto rating){
+    public RatingResponseDto save(@PathVariable("id") Long usersToId, @RequestBody RatingRequestDto rating) {
         return RatingMapper.toResponse(ratingService.create(rating, usersToId));
     }
 }
