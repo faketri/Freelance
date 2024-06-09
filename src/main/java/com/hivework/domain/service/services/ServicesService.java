@@ -73,6 +73,8 @@ public class ServicesService {
                 }
                 services.getImages().add(new Image(null, imageName));
             }
+
+            return save(services);
         } catch (Exception ex) {
             System.out.println("create: " + ex.getMessage());
         }
