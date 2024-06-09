@@ -146,10 +146,10 @@ public class DomainApplication {
             graf.setPassword(passwordEncoder.encode("123123123"));
 
             final Users ADMIN_KRUTOY = new Users();
-            graf.setLogin("admin123");
-            graf.setEmail("admin123@mail.ru");
-            graf.getRoles().add(ERole.SUPER_USER);
-            graf.setPassword(passwordEncoder.encode("123123123"));
+            ADMIN_KRUTOY.setLogin("admin123");
+            ADMIN_KRUTOY.setEmail("admin123@mail.ru");
+            ADMIN_KRUTOY.getRoles().add(ERole.SUPER_USER);
+            ADMIN_KRUTOY.setPassword(passwordEncoder.encode("123123123"));
 
             final Users valeraUser = userService.save(valera);
             final Users krisUser = userService.save(kris);
