@@ -17,6 +17,7 @@ import com.hivework.domain.service.project.UserResponseService;
 import com.hivework.domain.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,6 +92,7 @@ public class ProjectController {
         return ProjectMapper.toResponse(projectsService.create(projectRequest, images));
     }
 
+    @PreAuthorize("hasAuthority('SUPER_USER')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteById(final @PathVariable("id") Long id) {
         projectsService.deleteById(id);

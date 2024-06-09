@@ -33,7 +33,6 @@ public class UserService {
     }
 
     public Users getCurrentUser() {
-        // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getName();

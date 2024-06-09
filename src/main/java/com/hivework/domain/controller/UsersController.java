@@ -4,6 +4,7 @@ import com.hivework.domain.dto.response.UserResponse;
 import com.hivework.domain.mapper.UsersMapper;
 import com.hivework.domain.service.user.UserService;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +33,7 @@ public class UsersController {
         return UsersMapper.toResponse(userService.findById(id));
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserResponse> findAll() {
         return userService.findAll().stream().map(UsersMapper::toResponse).collect(Collectors.toList());
     }
@@ -42,6 +43,7 @@ public class UsersController {
         return UsersMapper.toResponse(userService.updateImage(multipartFile));
     }
 
+    @PreAuthorize("hasAuthority('SUPER_USER')")
     @RequestMapping(path = "/{id}/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable("id") Long id) {
         userService.deleteById(id);

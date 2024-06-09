@@ -7,6 +7,7 @@ import com.hivework.domain.mapper.ServicesMapper;
 import com.hivework.domain.service.services.ServicesService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,11 +43,10 @@ public class ServicesController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ServiceResponseDto save(final @RequestPart("service") @Valid ServiceRequest serviceRequest,
                                    final @RequestPart("images") List<MultipartFile> images) {
-
-
         return ServicesMapper.toDto(servicesService.create(serviceRequest, images));
     }
 
+    @PreAuthorize("hasAuthority('SUPER_USER')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteById(final @PathVariable("id") Long id) {
         servicesService.deleteById(id);
