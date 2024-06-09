@@ -1,6 +1,5 @@
 package com.hivework.domain;
 
-import com.github.javafaker.Faker;
 import com.hivework.domain.entity.categories.Categories;
 import com.hivework.domain.entity.categories.SubCategories;
 import com.hivework.domain.entity.projects.DeveloperResponseProjects;
@@ -25,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 @SpringBootApplication
@@ -46,8 +44,6 @@ public class DomainApplication {
                                  UserResponseService userResponseService,
                                  HttpSession session) {
         return args -> {
-            Faker faker = new Faker(new Locale("ru"));
-
             final Set<SubCategories> subCategoriesForProgramming =
                     Set.of(new SubCategories(null, "Бэкенд"),
                             new SubCategories(null, "Фронтенд"),
@@ -72,11 +68,11 @@ public class DomainApplication {
                             new SubCategories(null, "Анимация"));
 
             final Set<SubCategories> subCategoriesForMarketing =
-                    Set.of(new SubCategories(null, "Сайты"),
-                            new SubCategories(null, "Мобильные приложение"),
-                            new SubCategories(null, "Десктопное приложение"),
-                            new SubCategories(null, "Аналитика"),
-                            new SubCategories(null, "Сервера"));
+                    Set.of(new SubCategories(null, "SMM"),
+                            new SubCategories(null, "SEO"),
+                            new SubCategories(null, "Контекстная реклама"),
+                            new SubCategories(null, "E-mail маркетинг"),
+                            new SubCategories(null, "Продажи и генерация лидов"));
 
             final Set<SubCategories> subCategoriesForPhotography =
                     Set.of(new SubCategories(null, "Редактирование фото"),
@@ -145,40 +141,47 @@ public class DomainApplication {
 
             final Users graf = new Users();
             graf.setLogin("graf123");
-            graf.setEmail("grafTaynoDernyl@mail.ru");
+            graf.setEmail("grafTayno@mail.ru");
             graf.getRoles().add(ERole.CUSTOMER);
+            graf.setPassword(passwordEncoder.encode("123123123"));
+
+            final Users ADMIN_KRUTOY = new Users();
+            graf.setLogin("admin123");
+            graf.setEmail("admin123@mail.ru");
+            graf.getRoles().add(ERole.MODERATOR);
             graf.setPassword(passwordEncoder.encode("123123123"));
 
             final Users valeraUser = userService.save(valera);
             final Users krisUser = userService.save(kris);
             final Users grafUser = userService.save(graf);
+            final Users admin = userService.save(ADMIN_KRUTOY);
 
             krisUser.getRoles().add(ERole.FREELANCER);
 
             Projects projects = new Projects();
 
-            projects.setTitle("АНИМАЦУЯ СДЕЛАЙ ДА");
+            projects.setTitle("3А Анимация дисептикона");
             projects.setUsersCreator(valeraUser);
             projects.getSkills().addAll(skills.subList(0, 2));
-            projects.setDescription("СДЕЛАЙ ЭТУ ТЕМКУ БРАТКА, ДАМ БАБОК");
+            projects.setDescription("Нужен человек на проект для создания 3D анимаций.");
             projects.setDateOfCompletion(LocalDateTime.now().plusDays(10));
+            projects.setPrice(50_000L);
 
-            //projects.getSkills().addAll(skillsForProject);
             System.out.println(projects);
             projects = projectsService.save(projects);
 
             DeveloperResponseProjects developerResponseProjects = new DeveloperResponseProjects();
 
             developerResponseProjects.setUsersDeveloper(krisUser);
-            developerResponseProjects.setMessage("ХОЧУ УЖАСНО ЭТО СДЕЛАТЬ");
+            developerResponseProjects.setMessage("Возьми меня, мне семью кормить надо.");
             developerResponseProjects.setProjects(projects);
 
             developerResponseProjects = userResponseService.save(developerResponseProjects);
 
             Services services = new Services();
 
-            services.setTitle("МОБИЛКИ БРАТ");
-            services.setDescription("СДЛЕАЮ ЭТО БРАТ");
+            services.setTitle("Мобильное приложение");
+            services.setDescription("Разработка мобильных приложения по вашему ТЗ.");
             services.setSubCategories(
                     categories.stream()
                             .filter(categories1 -> categories1.getName().equals("Программирование и технологии"))
@@ -186,7 +189,7 @@ public class DomainApplication {
                             .get()
                             .getSubCategories()
                             .stream()
-                            .filter(subCat -> subCat.getName().equals("Бэкенд"))
+                            .filter(subCat -> subCat.getName().equals("Мобильное приложение"))
                             .findFirst()
                             .get()
             );
